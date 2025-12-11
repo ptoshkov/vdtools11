@@ -284,8 +284,8 @@ void ShowMenu(void)
         AppendMenu(hMenu, MF_STRING | uiDraggingChecked(), ID_MENU_ITEM3, TEXT("Move Windows To Adjacent Desktop"));
 
         AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
-        AppendMenu(hMenu, MF_STRING | MF_GRAYED, ID_MENU_ABOUT, TEXT("About"));
-        AppendMenu(hMenu, MF_STRING | MF_GRAYED, ID_MENU_HELP, TEXT("Help"));
+        AppendMenu(hMenu, MF_STRING, ID_MENU_ABOUT, TEXT("About"));
+        AppendMenu(hMenu, MF_STRING, ID_MENU_HELP, TEXT("Help"));
         AppendMenu(hMenu, MF_STRING, ID_MENU_EXIT, TEXT("Exit"));
 
         POINT pt;
@@ -314,12 +314,12 @@ void ShowMenu(void)
 
         if (ID_MENU_ABOUT == ret)
         {
-            // show about
+            MessageBox(NULL, TEXT("VD Tools 11 v0.1.0 (commit 8a4542195bc3bdffdd97c00a138d672d9061775a)."), TEXT("About"), MB_OK);
         }
 
         if (ID_MENU_HELP == ret)
         {
-            // show help
+            ShellExecute(NULL, TEXT("open"), TEXT("https://github.com/ptoshkov/vdtools11"), NULL, NULL, SW_SHOW);
         }
 
         if (ID_MENU_EXIT == ret)
