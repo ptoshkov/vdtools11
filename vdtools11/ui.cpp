@@ -314,7 +314,7 @@ void ShowMenu(void)
 
         if (ID_MENU_ABOUT == ret)
         {
-            MessageBox(NULL, TEXT("VD Tools 11 v0.1.0."), TEXT("About"), MB_OK);
+            MessageBox(NULL, TEXT("VD Tools 11 v0.1.0 (commit 8a4542195bc3bdffdd97c00a138d672d9061775a)."), TEXT("About"), MB_OK);
         }
 
         if (ID_MENU_HELP == ret)
@@ -359,18 +359,10 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-HRESULT uiCreateWindow(HINSTANCE hInstance)
+void uiCreateWindow(HINSTANCE hInstance)
 {
     const WCHAR szClassName[] = TEXT("vdtools11");
-    const WCHAR szWindowName[] = TEXT("VDTOOLS11");
     m_hWnd = 0;
-
-    // Prevent multiple instances from running.
-    if (NULL != FindWindow(szClassName, szWindowName))
-    {
-        MessageBox(NULL, TEXT("VD Tools 11 is already running."), TEXT("Error"), MB_OK);
-        return E_ABORT;
-    }
 
     // Register the window class.
     WNDCLASS wc = {0};
@@ -380,10 +372,8 @@ HRESULT uiCreateWindow(HINSTANCE hInstance)
     RegisterClass(&wc);
 
     // Create hidden window.
-    m_hWnd = CreateWindow(szClassName, szWindowName, 0,
+    m_hWnd = CreateWindow(szClassName, TEXT("VDTOOLS11"), 0,
         0, 0, 0, 0, NULL, NULL, hInstance, NULL);
-    
-    return S_OK;
 }
 
 void uiAddTrayIcon(void)
