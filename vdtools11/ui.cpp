@@ -315,7 +315,7 @@ void ShowMenu(void)
 
         if (ID_MENU_ABOUT == ret)
         {
-            MessageBox(NULL, TEXT("VD Tools 11 v0.1.0 (commit 8a4542195bc3bdffdd97c00a138d672d9061775a)."), TEXT("About"), MB_OK);
+            MessageBox(NULL, TEXT("VD Tools 11 v0.2.0."), TEXT("About"), MB_OK);
         }
 
         if (ID_MENU_HELP == ret)
