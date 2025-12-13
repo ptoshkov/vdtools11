@@ -24,11 +24,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
         uiToggleStartOnHome = prefToggleStartOnHome;
         uiToggleJumping = prefToggleJumping;
         uiToggleDragging = prefToggleDragging;
-        uiCreateWindow(hInstance);
-        uiAddTrayIcon();
-        if (prefJumpingChecked()) uiRegisterJumpKeys();
-        if (prefDraggingChecked()) uiRegisterDragKeys();
-        uiStartMessageLoop();
+        hr = uiCreateWindow(hInstance);
+
+        if (SUCCEEDED(hr))
+        {
+            uiAddTrayIcon();
+            if (prefJumpingChecked()) uiRegisterJumpKeys();
+            if (prefDraggingChecked()) uiRegisterDragKeys();
+            uiStartMessageLoop();
+        }
 
         // co destroy.
         coReleaseInstances();
