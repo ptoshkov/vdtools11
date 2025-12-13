@@ -42,6 +42,7 @@ void (*uiToggleJumping)(void);
 void (*uiToggleDragging)(void);
 static HWND m_hWnd;
 static NOTIFYICONDATA m_nid;
+static UINT m_uTaskbarCreatedMsg;
 
 void uiRegisterJumpKeys(void)
 {
@@ -356,12 +357,20 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         return 0;
     }
 
+    // Re-add the tray icon in case Windows Explorer restarts.
+    if (m_uTaskbarCreatedMsg == uMsg)
+    {
+        uiAddTrayIcon();
+        return 0;
+    }
+
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
 void uiCreateWindow(HINSTANCE hInstance, const WCHAR szClassName[], const WCHAR szWindowName[])
 {
     m_hWnd = 0;
+    m_uTaskbarCreatedMsg = 0;
 
     // Register the window class.
     WNDCLASS wc = {0};
@@ -373,6 +382,9 @@ void uiCreateWindow(HINSTANCE hInstance, const WCHAR szClassName[], const WCHAR 
     // Create hidden window.
     m_hWnd = CreateWindow(szClassName, szWindowName, 0,
         0, 0, 0, 0, NULL, NULL, hInstance, NULL);
+
+    // Subscribe to taskbar created events in case Windows Explorer restarts.
+    m_uTaskbarCreatedMsg = RegisterWindowMessage(TEXT("TaskbarCreated"));
 }
 
 void uiAddTrayIcon(void)
