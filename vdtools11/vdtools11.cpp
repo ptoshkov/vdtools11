@@ -7,6 +7,16 @@
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /* nCmdShow */)
 {
+    const WCHAR szClassName[] = TEXT("vdtools11");
+    const WCHAR szWindowName[] = TEXT("VDTOOLS11");
+
+    if (FindWindow(szClassName, szWindowName))
+    {
+        // Prevent multiple instances from running.
+        MessageBox(NULL, TEXT("VD Tools 11 is already running."), TEXT("Error"), MB_OK);
+        return 1;
+    }
+
     HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
     if (SUCCEEDED(hr))
@@ -24,7 +34,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
         uiToggleStartOnHome = prefToggleStartOnHome;
         uiToggleJumping = prefToggleJumping;
         uiToggleDragging = prefToggleDragging;
-        uiCreateWindow(hInstance);
+        uiCreateWindow(hInstance, szClassName, szWindowName);
         uiAddTrayIcon();
         if (prefJumpingChecked()) uiRegisterJumpKeys();
         if (prefDraggingChecked()) uiRegisterDragKeys();

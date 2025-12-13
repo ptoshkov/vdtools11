@@ -359,9 +359,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-void uiCreateWindow(HINSTANCE hInstance)
+void uiCreateWindow(HINSTANCE hInstance, const WCHAR szClassName[], const WCHAR szWindowName[])
 {
-    const WCHAR szClassName[] = TEXT("vdtools11");
     m_hWnd = 0;
 
     // Register the window class.
@@ -372,7 +371,7 @@ void uiCreateWindow(HINSTANCE hInstance)
     RegisterClass(&wc);
 
     // Create hidden window.
-    m_hWnd = CreateWindow(szClassName, TEXT("VDTOOLS11"), 0,
+    m_hWnd = CreateWindow(szClassName, szWindowName, 0,
         0, 0, 0, 0, NULL, NULL, hInstance, NULL);
 }
 
