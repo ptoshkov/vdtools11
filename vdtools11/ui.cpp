@@ -46,231 +46,239 @@ static UINT m_uTaskbarCreatedMsg;
 
 void uiRegisterJumpKeys(void)
 {
-    if (m_hWnd)
+    if (!m_hWnd)
     {
-        UINT modifiers = (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT | MOD_WIN);
+        return;
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY1, modifiers, '1'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 1."), TEXT("Error"), MB_OK);
-        }
+    UINT modifiers = (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT | MOD_WIN);
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY2, modifiers, '2'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 2."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY1, modifiers, '1'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 1."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY3, modifiers, '3'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 3."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY2, modifiers, '2'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 2."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY4, modifiers, '4'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 4."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY3, modifiers, '3'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 3."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY5, modifiers, '5'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 5."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY4, modifiers, '4'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 4."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY6, modifiers, '6'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 6."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY5, modifiers, '5'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 5."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY7, modifiers, '7'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 7."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY6, modifiers, '6'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 6."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY8, modifiers, '8'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 8."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY7, modifiers, '7'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 7."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY9, modifiers, '9'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 9."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY8, modifiers, '8'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 8."), TEXT("Error"), MB_OK);
+    }
 
-        modifiers = (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT | MOD_SHIFT | MOD_WIN);
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY9, modifiers, '9'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 9."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY10, modifiers, '1'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 10."), TEXT("Error"), MB_OK);
-        }
+    modifiers = (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT | MOD_SHIFT | MOD_WIN);
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY11, modifiers, '2'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 11."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY10, modifiers, '1'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 10."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY12, modifiers, '3'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 12."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY11, modifiers, '2'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 11."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY13, modifiers, '4'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 13."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY12, modifiers, '3'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 12."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY14, modifiers, '5'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 14."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY13, modifiers, '4'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 13."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY15, modifiers, '6'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 15."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY14, modifiers, '5'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 14."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY16, modifiers, '7'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 16."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY15, modifiers, '6'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 15."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY17, modifiers, '8'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 17."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY16, modifiers, '7'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 16."), TEXT("Error"), MB_OK);
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY18, modifiers, '9'))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 18."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY17, modifiers, '8'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 17."), TEXT("Error"), MB_OK);
+    }
+
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY18, modifiers, '9'))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 18."), TEXT("Error"), MB_OK);
     }
 }
 
 void uiRegisterDragKeys(void)
 {
-    if (m_hWnd)
+    if (!m_hWnd)
     {
-        UINT modifiers = (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT | MOD_WIN);
+        return;
+    }
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY19, modifiers, VK_LEFT))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 19."), TEXT("Error"), MB_OK);
-        }
+    UINT modifiers = (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT | MOD_WIN);
 
-        if (!RegisterHotKey(m_hWnd, ID_HOTKEY20, modifiers, VK_RIGHT))
-        {
-            MessageBox(NULL, TEXT("Could not register hot key 20."), TEXT("Error"), MB_OK);
-        }
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY19, modifiers, VK_LEFT))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 19."), TEXT("Error"), MB_OK);
+    }
+
+    if (!RegisterHotKey(m_hWnd, ID_HOTKEY20, modifiers, VK_RIGHT))
+    {
+        MessageBox(NULL, TEXT("Could not register hot key 20."), TEXT("Error"), MB_OK);
     }
 }
 
 void UnregisterJumpKeys(void)
 {
-    if (m_hWnd)
+    if (!m_hWnd)
     {
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY1))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 1."), TEXT("Error"), MB_OK);
-        }
+        return;
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY2))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 2."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY1))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 1."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY3))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 3."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY2))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 2."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY4))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 4."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY3))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 3."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY5))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 5."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY4))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 4."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY6))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 6."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY5))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 5."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY7))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 7."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY6))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 6."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY8))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 8."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY7))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 7."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY9))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 9."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY8))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 8."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY10))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 10."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY9))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 9."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY11))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 11."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY10))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 10."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY12))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 12."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY11))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 11."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY13))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 13."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY12))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 12."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY14))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 14."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY13))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 13."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY15))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 15."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY14))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 14."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY16))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 16."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY15))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 15."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY17))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 17."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY16))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 16."), TEXT("Error"), MB_OK);
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY18))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 18."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY17))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 17."), TEXT("Error"), MB_OK);
+    }
+
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY18))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 18."), TEXT("Error"), MB_OK);
     }
 }
 
 void UnregisterDragKeys(void)
 {
-    if (m_hWnd)
+    if (!m_hWnd)
     {
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY19))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 19."), TEXT("Error"), MB_OK);
-        }
+        return;
+    }
 
-        if (!UnregisterHotKey(m_hWnd, ID_HOTKEY20))
-        {
-            MessageBox(NULL, TEXT("Could not unregister hot key 20."), TEXT("Error"), MB_OK);
-        }
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY19))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 19."), TEXT("Error"), MB_OK);
+    }
+
+    if (!UnregisterHotKey(m_hWnd, ID_HOTKEY20))
+    {
+        MessageBox(NULL, TEXT("Could not unregister hot key 20."), TEXT("Error"), MB_OK);
     }
 }
 
@@ -278,55 +286,57 @@ void ShowMenu(void)
 {
     HMENU hMenu = CreatePopupMenu();
 
-    if (hMenu)
+    if (!hMenu)
     {
-        AppendMenu(hMenu, MF_STRING | uiStartOnHomeChecked(), ID_MENU_ITEM1, TEXT("Switch To Desktop 1 On Start"));
-        AppendMenu(hMenu, MF_STRING | uiJumpingChecked(), ID_MENU_ITEM2, TEXT("Jump To Desktop Using Shortcut"));
-        AppendMenu(hMenu, MF_STRING | uiDraggingChecked(), ID_MENU_ITEM3, TEXT("Move Windows To Adjacent Desktop"));
+        return;
+    }
 
-        AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
-        AppendMenu(hMenu, MF_STRING, ID_MENU_ABOUT, TEXT("About"));
-        AppendMenu(hMenu, MF_STRING, ID_MENU_HELP, TEXT("Help"));
-        AppendMenu(hMenu, MF_STRING, ID_MENU_EXIT, TEXT("Exit"));
+    AppendMenu(hMenu, MF_STRING | uiStartOnHomeChecked(), ID_MENU_ITEM1, TEXT("Switch To Desktop 1 On Start"));
+    AppendMenu(hMenu, MF_STRING | uiJumpingChecked(), ID_MENU_ITEM2, TEXT("Jump To Desktop Using Shortcut"));
+    AppendMenu(hMenu, MF_STRING | uiDraggingChecked(), ID_MENU_ITEM3, TEXT("Move Windows To Adjacent Desktop"));
 
-        POINT pt;
-        GetCursorPos(&pt);
-        SetForegroundWindow(m_hWnd);
-        BOOL ret = TrackPopupMenu(hMenu, TPM_LEFTBUTTON | TPM_RETURNCMD, pt.x, pt.y, 0, m_hWnd, NULL);
+    AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
+    AppendMenu(hMenu, MF_STRING, ID_MENU_ABOUT, TEXT("About"));
+    AppendMenu(hMenu, MF_STRING, ID_MENU_HELP, TEXT("Help"));
+    AppendMenu(hMenu, MF_STRING, ID_MENU_EXIT, TEXT("Exit"));
 
-        DestroyMenu(hMenu);
+    POINT pt;
+    GetCursorPos(&pt);
+    SetForegroundWindow(m_hWnd);
+    BOOL ret = TrackPopupMenu(hMenu, TPM_LEFTBUTTON | TPM_RETURNCMD, pt.x, pt.y, 0, m_hWnd, NULL);
 
-        if (ID_MENU_ITEM1 == ret)
-        {
-            uiToggleStartOnHome();
-        }
+    DestroyMenu(hMenu);
 
-        if (ID_MENU_ITEM2 == ret)
-        {
-            uiToggleJumping();
-            (uiJumpingChecked()) ? uiRegisterJumpKeys() : UnregisterJumpKeys();
-        }
+    if (ID_MENU_ITEM1 == ret)
+    {
+        uiToggleStartOnHome();
+    }
 
-        if (ID_MENU_ITEM3 == ret)
-        {
-            uiToggleDragging();
-            (uiDraggingChecked()) ? uiRegisterDragKeys() : UnregisterDragKeys();
-        }
+    if (ID_MENU_ITEM2 == ret)
+    {
+        uiToggleJumping();
+        (uiJumpingChecked()) ? uiRegisterJumpKeys() : UnregisterJumpKeys();
+    }
 
-        if (ID_MENU_ABOUT == ret)
-        {
-            MessageBox(NULL, TEXT("VD Tools 11 v0.2.0."), TEXT("About"), MB_OK);
-        }
+    if (ID_MENU_ITEM3 == ret)
+    {
+        uiToggleDragging();
+        (uiDraggingChecked()) ? uiRegisterDragKeys() : UnregisterDragKeys();
+    }
 
-        if (ID_MENU_HELP == ret)
-        {
-            ShellExecute(NULL, TEXT("open"), TEXT("https://github.com/ptoshkov/vdtools11"), NULL, NULL, SW_SHOW);
-        }
+    if (ID_MENU_ABOUT == ret)
+    {
+        MessageBox(NULL, TEXT("VD Tools 11 v0.2.0."), TEXT("About"), MB_OK);
+    }
 
-        if (ID_MENU_EXIT == ret)
-        {
-            DestroyWindow(m_hWnd);
-        }
+    if (ID_MENU_HELP == ret)
+    {
+        ShellExecute(NULL, TEXT("open"), TEXT("https://github.com/ptoshkov/vdtools11"), NULL, NULL, SW_SHOW);
+    }
+
+    if (ID_MENU_EXIT == ret)
+    {
+        DestroyWindow(m_hWnd);
     }
 }
 
@@ -389,22 +399,24 @@ void uiCreateWindow(HINSTANCE hInstance, const WCHAR szClassName[], const WCHAR 
 
 void uiAddTrayIcon(void)
 {
-    if (m_hWnd)
+    if (!m_hWnd)
     {
-        // Add tray icon.
-        m_nid.cbSize = sizeof(NOTIFYICONDATA);
-        m_nid.hWnd = m_hWnd;
-        m_nid.uID = ID_TRAY_APP_ICON;
-        m_nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP;
-        m_nid.uCallbackMessage = WM_USER_TRAYICON;
-        m_nid.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-        lstrcpy(m_nid.szTip, TEXT("VD Tools 11"));
-        Shell_NotifyIcon(NIM_ADD, &m_nid);
-
-        // NOTIFYICON_VERSION_4 is prefered
-        m_nid.uVersion = NOTIFYICON_VERSION_4;
-        Shell_NotifyIcon(NIM_SETVERSION, &m_nid);
+        return;
     }
+
+    // Add tray icon.
+    m_nid.cbSize = sizeof(NOTIFYICONDATA);
+    m_nid.hWnd = m_hWnd;
+    m_nid.uID = ID_TRAY_APP_ICON;
+    m_nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP;
+    m_nid.uCallbackMessage = WM_USER_TRAYICON;
+    m_nid.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+    lstrcpy(m_nid.szTip, TEXT("VD Tools 11"));
+    Shell_NotifyIcon(NIM_ADD, &m_nid);
+
+    // NOTIFYICON_VERSION_4 is prefered
+    m_nid.uVersion = NOTIFYICON_VERSION_4;
+    Shell_NotifyIcon(NIM_SETVERSION, &m_nid);
 }
 
 void uiStartMessageLoop(void)

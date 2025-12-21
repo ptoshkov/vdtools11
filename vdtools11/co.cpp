@@ -64,31 +64,28 @@ void coCreateInstances(void)
     HRESULT hr = CoCreateInstance(CLSID_VirtualDesktopManager, NULL, CLSCTX_ALL,
         IID_PPV_ARGS(&m_pVirtualDesktopManager));
 
-    if (SUCCEEDED(hr))
-    {
-        hr = CoCreateInstance(CLSID_ImmersiveShell, NULL, CLSCTX_ALL,
-            IID_PPV_ARGS(&m_pServiceProvider));
-
-        if (SUCCEEDED(hr))
-        {
-            hr = m_pServiceProvider->QueryService(CLSID_VirtualDesktopManagerInternal,
-                &m_pVirtualDesktopManagerInternal);
-
-            if (SUCCEEDED(hr))
-            {}
-            else
-            {
-                MessageBox(NULL, TEXT("Could not create Virtual Desktop Manager Internal object."), TEXT("Error"), MB_OK);
-            }
-        }
-        else
-        {
-            MessageBox(NULL, TEXT("Could not create Service Provider object."), TEXT("Error"), MB_OK);
-        }
-    }
-    else
+    if (FAILED(hr))
     {
         MessageBox(NULL, TEXT("Could not create Virtual Desktop Manager object."), TEXT("Error"), MB_OK);
+        return;
+    }
+
+    hr = CoCreateInstance(CLSID_ImmersiveShell, NULL, CLSCTX_ALL,
+        IID_PPV_ARGS(&m_pServiceProvider));
+
+    if (FAILED(hr))
+    {
+        MessageBox(NULL, TEXT("Could not create Service Provider object."), TEXT("Error"), MB_OK);
+        return;
+    }
+
+    hr = m_pServiceProvider->QueryService(CLSID_VirtualDesktopManagerInternal,
+        &m_pVirtualDesktopManagerInternal);
+
+    if (FAILED(hr))
+    {
+        MessageBox(NULL, TEXT("Could not create Virtual Desktop Manager Internal object."), TEXT("Error"), MB_OK);
+        return;
     }
 }
 
@@ -161,33 +158,37 @@ void coJumpToDesktop(UINT idx, BOOL bMoveForegroundView)
     const DWORD animationTimeoutMs = 200;
     DWORD currentTimeMs = GetTickCount();
 
-    if ((currentTimeMs - m_lastJumpTimeMs) > animationTimeoutMs)
+    if ((currentTimeMs - m_lastJumpTimeMs) <= animationTimeoutMs)
     {
-        m_lastJumpTimeMs = currentTimeMs;
+        return;
+    }
 
-        IObjectArray *pDesktops;
-        (void)m_pVirtualDesktopManagerInternal->GetDesktops(&pDesktops);
+    m_lastJumpTimeMs = currentTimeMs;
 
-        UINT cnt;
-        (void)pDesktops->GetCount(&cnt);
+    IObjectArray *pDesktops;
+    (void)m_pVirtualDesktopManagerInternal->GetDesktops(&pDesktops);
 
-        if (idx < cnt)
-        {
-            IVirtualDesktop *pVirtualDesktop;
-            pDesktops->GetAt(idx, IID_PPV_ARGS(&pVirtualDesktop));
+    UINT cnt;
+    (void)pDesktops->GetCount(&cnt);
 
-            if (bMoveForegroundView)
-            {
-                (void)m_pVirtualDesktopManagerInternal->SwitchDesktopAndMoveForegroundView(pVirtualDesktop);
-            }
-            else
-            {
-                (void)m_pVirtualDesktopManagerInternal->SwitchDesktop(pVirtualDesktop);
+    if (idx >= cnt)
+    {
+        return;
+    }
 
-                // Set the focus to a window in the new virtual desktop.
-                EnumWindows(EnumWindowsProc, reinterpret_cast<LPARAM>(m_pVirtualDesktopManager));
-            }
-        }
+    IVirtualDesktop *pVirtualDesktop;
+    pDesktops->GetAt(idx, IID_PPV_ARGS(&pVirtualDesktop));
+
+    if (bMoveForegroundView)
+    {
+        (void)m_pVirtualDesktopManagerInternal->SwitchDesktopAndMoveForegroundView(pVirtualDesktop);
+    }
+    else
+    {
+        (void)m_pVirtualDesktopManagerInternal->SwitchDesktop(pVirtualDesktop);
+
+        // Set the focus to a window in the new virtual desktop.
+        EnumWindows(EnumWindowsProc, reinterpret_cast<LPARAM>(m_pVirtualDesktopManager));
     }
 }
 
