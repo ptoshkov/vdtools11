@@ -31,3 +31,6 @@ A: Windows 11, unlike Windows 10, boots on the virtual desktop which was last in
 
 Q: If a window is part of a snap group and I move it to another virtual desktop, will the whole group move with it?\
 A: Yes, the whole group will move to the new virtual desktop, preserving the window layout.
+
+Q: If VD Tools 11 is written in C++, why doesn't it make use of more C++ features?\
+A: VD Tools 11 is a Petzold-style application, i.e. it uses mostly plain C.
