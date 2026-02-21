@@ -17,38 +17,36 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
         return 1;
     }
 
-    HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-
-    if (SUCCEEDED(hr))
-    {
-        // co setup.
-        coCreateInstances();
-        if (prefStartOnHomeChecked()) coJumpToDesktop(0, FALSE);
-
-        // ui setup.
-        uiJumpToDesktop = coJumpToDesktop;
-        uiGetCurrentDesktop = coGetCurrentDesktop;
-        uiStartOnHomeChecked = prefStartOnHomeChecked;
-        uiJumpingChecked = prefJumpingChecked;
-        uiDraggingChecked = prefDraggingChecked;
-        uiToggleStartOnHome = prefToggleStartOnHome;
-        uiToggleJumping = prefToggleJumping;
-        uiToggleDragging = prefToggleDragging;
-        uiCreateWindow(hInstance, szClassName, szWindowName);
-        uiAddTrayIcon();
-        if (prefJumpingChecked()) uiRegisterJumpKeys();
-        if (prefDraggingChecked()) uiRegisterDragKeys();
-        uiStartMessageLoop();
-
-        // co destroy.
-        coReleaseInstances();
-
-        CoUninitialize();
-    }
-    else
+    if (FAILED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
     {
         MessageBox(NULL, TEXT("Could not initialize COM."), TEXT("Error"), MB_OK);
+        return 1;
     }
+
+    // co setup.
+    coCreateInstances();
+    if (prefStartOnHomeChecked()) coJumpToDesktop(0, FALSE);
+
+    // ui setup.
+    uiJumpToDesktop = coJumpToDesktop;
+    uiGetCurrentDesktop = coGetCurrentDesktop;
+    uiStartOnHomeChecked = prefStartOnHomeChecked;
+    uiJumpingChecked = prefJumpingChecked;
+    uiDraggingChecked = prefDraggingChecked;
+    uiToggleStartOnHome = prefToggleStartOnHome;
+    uiToggleJumping = prefToggleJumping;
+    uiToggleDragging = prefToggleDragging;
+    uiCreateWindow(hInstance, szClassName, szWindowName);
+    uiAddTrayIcon();
+    if (prefJumpingChecked()) uiRegisterJumpKeys();
+    if (prefDraggingChecked()) uiRegisterDragKeys();
+
+    uiStartMessageLoop();
+
+    // co destroy.
+    coReleaseInstances();
+
+    CoUninitialize();
 
     return 0;
 }
