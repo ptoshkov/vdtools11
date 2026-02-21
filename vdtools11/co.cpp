@@ -155,6 +155,11 @@ BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 
 void coJumpToDesktop(UINT idx, BOOL bMoveForegroundView)
 {
+    if ((NULL == m_pVirtualDesktopManager) || (NULL == m_pVirtualDesktopManagerInternal))
+    {
+        return;
+    }
+
     const DWORD animationTimeoutMs = 200;
     DWORD currentTimeMs = GetTickCount();
 
@@ -194,6 +199,13 @@ void coJumpToDesktop(UINT idx, BOOL bMoveForegroundView)
 
 UINT coGetCurrentDesktop(void)
 {
+    UINT idx = 0;
+
+    if (NULL == m_pVirtualDesktopManagerInternal)
+    {
+        return idx;
+    }
+
     IObjectArray *pDesktops;
     (void)m_pVirtualDesktopManagerInternal->GetDesktops(&pDesktops);
 
@@ -203,7 +215,6 @@ UINT coGetCurrentDesktop(void)
     IVirtualDesktop *pCurrentDesktop;
     (void)m_pVirtualDesktopManagerInternal->GetCurrentDesktop(&pCurrentDesktop);
 
-    UINT idx;
     for (idx = 0; idx < cnt; idx++)
     {
         IVirtualDesktop *pVirtualDesktop;
