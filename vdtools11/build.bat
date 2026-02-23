@@ -1,13 +1,29 @@
+@set BUILDDIR="build"
+@set CLASSNAME="vdtools11"
+@set WINDOWNAME="VDTOOLS11"
+@set APPNAME="VD Tools 11"
+@set EXENAME="%CLASSNAME%.exe"
+@set NSINAME="%CLASSNAME%.nsi"
+@set LNKNAME="%APPNAME%.lnk"
+@set INSTNAME="Install.exe"
+@set UINSTNAME="Uninstall.exe"
+@set STARTONHOMEFLAG="StartOnHomeFlag"
+@set JUMPINGFLAG="JumpingFlag"
+@set DRAGGINGFLAG="DraggingFlag"
+
 @echo Activating VS Dev CMD 64-bit
 @call "%ProgramFiles(x86)%\Microsoft Visual Studio\18\BuildTools\Common7\Tools\VsDevCmd.bat" -arch=amd64
 @call :checkStageSuccessful
 
 @echo Compiling VD Tools 11
-@cl /O2 /EHsc /W4 /DUNICODE *.cpp ole32.lib user32.lib shell32.lib dwmapi.lib advapi32.lib /link /out:vdtools11.exe
+@if not exist %BUILDDIR% mkdir %BUILDDIR%
+@cl /Fo%BUILDDIR%\ /O2 /EHsc /W4 /DUNICODE *.cpp^
+ ole32.lib user32.lib shell32.lib dwmapi.lib advapi32.lib^
+ /link /out:%BUILDDIR%\\%EXENAME%
 @call :checkStageSuccessful
 
 @echo Creating installer
-@"%ProgramFiles(x86)%\NSIS\makensis.exe" vdtools11.nsi
+@"%ProgramFiles(x86)%\NSIS\makensis.exe" %NSINAME%
 @call :checkStageSuccessful
 
 @pause

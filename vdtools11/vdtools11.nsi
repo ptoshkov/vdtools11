@@ -6,13 +6,21 @@
 ;--------------------------------
 ;General
 
+  !define BUILDDIR "build"
   !define APPNAME "VD Tools 11"
   !define SUBKEY "Software\${APPNAME}"
   !define EXENAME "vdtools11.exe"
+  !define LNKNAME "${APPNAME}.lnk"
+  !define INSTNAME "Install.exe"
+  !define UINSTNAME "Uninstall.exe"
+  !define STARTONHOMEFLAG "StartOnHomeFlag"
+  !define JUMPINGFLAG "JumpingFlag"
+  !define DRAGGINGFLAG "DraggingFlag"
+  !define ADDREMOVELISTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall"
 
   ;Name and file
   Name "${APPNAME}"
-  OutFile "Install.exe"
+  OutFile "${BUILDDIR}\${INSTNAME}"
   Unicode True
 
   ;Default installation folder
@@ -37,7 +45,7 @@ FunctionEnd
 ;Create auto startup shortcut
 
 Function CreateAutoStartupShortcut
-  CreateShortCut "$SMSTARTUP\${APPNAME}.lnk" "$INSTDIR\${EXENAME}"
+  CreateShortCut "$SMSTARTUP\${LNKNAME}" "$INSTDIR\${EXENAME}"
 FunctionEnd
 
 ;--------------------------------
@@ -88,7 +96,7 @@ Section "Install"
   SetOutPath "$INSTDIR"
 
   ;ADD YOUR OWN FILES HERE...
-  File "${EXENAME}"
+  File "${BUILDDIR}\${EXENAME}"
 
   SetRegView 64
   ReadRegStr $0 HKCU "${SUBKEY}" ""
@@ -98,22 +106,22 @@ Section "Install"
     WriteRegStr HKCU "${SUBKEY}" "" $INSTDIR
 
     ;Store default values of settings if it's a new installation
-    WriteRegDWORD HKCU "${SUBKEY}" "StartOnHomeFlag" 0
-    WriteRegDWORD HKCU "${SUBKEY}" "JumpingFlag" 0
-    WriteRegDWORD HKCU "${SUBKEY}" "DraggingFlag" 0
+    WriteRegDWORD HKCU "${SUBKEY}" "${STARTONHOMEFLAG}" 0
+    WriteRegDWORD HKCU "${SUBKEY}" "${JUMPINGFLAG}" 0
+    WriteRegDWORD HKCU "${SUBKEY}" "${DRAGGINGFLAG}" 0
   ${EndIf}
 
   ;Show entry in Add/Remove Programs
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" \
+  WriteRegStr HKCU "${ADDREMOVELISTKEY}\${APPNAME}" \
                   "DisplayName" "${APPNAME}"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" \
-                  "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
+  WriteRegStr HKCU "${ADDREMOVELISTKEY}\${APPNAME}" \
+                  "UninstallString" "$\"$INSTDIR\${UINSTNAME}$\""
 
   ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
+  WriteUninstaller "$INSTDIR\${UINSTNAME}"
 
   ;Create start menu item
-  CreateShortcut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\${EXENAME}"
+  CreateShortcut "$SMPROGRAMS\${LNKNAME}" "$INSTDIR\${EXENAME}"
 
 SectionEnd
 
@@ -128,19 +136,19 @@ Section "Uninstall"
   ;ADD YOUR OWN FILES HERE...
   Delete "$INSTDIR\${EXENAME}"
 
-  Delete "$INSTDIR\Uninstall.exe"
+  Delete "$INSTDIR\${UINSTNAME}"
 
   RMDir "$INSTDIR"
 
   ;Delete registry keys
   SetRegView 64
   DeleteRegKey HKCU "${SUBKEY}"
-  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
+  DeleteRegKey HKCU "${ADDREMOVELISTKEY}\${APPNAME}"
 
   ;Delete start menu item
-  Delete "$SMPROGRAMS\${APPNAME}.lnk"
+  Delete "$SMPROGRAMS\${LNKNAME}"
 
   ;Delete Auto Startup Shortcut
-  Delete "$SMSTARTUP\${APPNAME}.lnk"
+  Delete "$SMSTARTUP\${LNKNAME}"
 
 SectionEnd
