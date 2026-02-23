@@ -94,10 +94,10 @@ Section "Install"
   ReadRegStr $0 HKCU "${SUBKEY}" ""
 
   ${If} "$0" == ""
-    ;Store installation folder
+    ;Store installation folder if it's a new installation
     WriteRegStr HKCU "${SUBKEY}" "" $INSTDIR
 
-    ;Store settings
+    ;Store default values of settings if it's a new installation
     WriteRegDWORD HKCU "${SUBKEY}" "StartOnHomeFlag" 0
     WriteRegDWORD HKCU "${SUBKEY}" "JumpingFlag" 0
     WriteRegDWORD HKCU "${SUBKEY}" "DraggingFlag" 0
@@ -132,6 +132,7 @@ Section "Uninstall"
 
   RMDir "$INSTDIR"
 
+  ;Delete registry keys
   SetRegView 64
   DeleteRegKey HKCU "${SUBKEY}"
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
