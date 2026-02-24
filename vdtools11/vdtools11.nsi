@@ -17,6 +17,7 @@
   !define JUMPINGFLAG "JumpingFlag"
   !define DRAGGINGFLAG "DraggingFlag"
   !define LNKNAME "${APPNAME}.lnk"
+  !define ICONAME "${CLASSNAME}.ico"
   !define SUBKEY "Software\${APPNAME}"
   !define ADDREMOVELISTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
   !define MF_UNCHECKED 0
@@ -66,6 +67,8 @@ FunctionEnd
 ;--------------------------------
 ;Interface Settings
 
+  !define MUI_ICON "${ICONAME}"
+  !define MUI_UNICON "${ICONAME}"
   !define MUI_ABORTWARNING
   !define MUI_FINISHPAGE_RUN
   !define MUI_FINISHPAGE_RUN_FUNCTION "CreateAutoStartupShortcut"

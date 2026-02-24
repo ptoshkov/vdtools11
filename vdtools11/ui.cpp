@@ -40,6 +40,7 @@ DWORD (*uiDraggingChecked)(void);
 void (*uiToggleStartOnHome)(void);
 void (*uiToggleJumping)(void);
 void (*uiToggleDragging)(void);
+static HINSTANCE m_hInstance;
 static HWND m_hWnd;
 static NOTIFYICONDATA m_nid;
 static UINT m_uTaskbarCreatedMsg;
@@ -377,21 +378,31 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-void uiCreateWindow(HINSTANCE hInstance, const WCHAR szClassName[], const WCHAR szWindowName[])
+void uiSetInstance(const HINSTANCE hInstance)
 {
+    m_hInstance = hInstance;
+}
+
+void uiCreateWindow(const WCHAR szClassName[], const WCHAR szWindowName[])
+{
+    if (!m_hInstance)
+    {
+        return;
+    }
+
     m_hWnd = 0;
     m_uTaskbarCreatedMsg = 0;
 
     // Register the window class.
     WNDCLASS wc = {0};
     wc.lpfnWndProc = WindowProc;
-    wc.hInstance = hInstance;
+    wc.hInstance = m_hInstance;
     wc.lpszClassName = szClassName;
     RegisterClass(&wc);
 
     // Create hidden window.
     m_hWnd = CreateWindow(szClassName, szWindowName, 0,
-        0, 0, 0, 0, NULL, NULL, hInstance, NULL);
+        0, 0, 0, 0, NULL, NULL, m_hInstance, NULL);
 
     // Subscribe to taskbar created events in case Windows Explorer restarts.
     m_uTaskbarCreatedMsg = RegisterWindowMessage(TEXT("TaskbarCreated"));
@@ -399,7 +410,7 @@ void uiCreateWindow(HINSTANCE hInstance, const WCHAR szClassName[], const WCHAR 
 
 void uiAddTrayIcon(void)
 {
-    if (!m_hWnd)
+    if (!m_hInstance || !m_hWnd)
     {
         return;
     }
@@ -410,7 +421,7 @@ void uiAddTrayIcon(void)
     m_nid.uID = ID_TRAY_APP_ICON;
     m_nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP;
     m_nid.uCallbackMessage = WM_USER_TRAYICON;
-    m_nid.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+    m_nid.hIcon = LoadIcon(m_hInstance, MAKEINTRESOURCE(1));
     lstrcpy(m_nid.szTip, TEXT("VD Tools 11"));
     Shell_NotifyIcon(NIM_ADD, &m_nid);
 

@@ -36,7 +36,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
     uiToggleStartOnHome = prefToggleStartOnHome;
     uiToggleJumping = prefToggleJumping;
     uiToggleDragging = prefToggleDragging;
-    uiCreateWindow(hInstance, szClassName, szWindowName);
+    uiSetInstance(hInstance);
+    uiCreateWindow(szClassName, szWindowName);
     uiAddTrayIcon();
     if (prefJumpingChecked()) uiRegisterJumpKeys();
     if (prefDraggingChecked()) uiRegisterDragKeys();
