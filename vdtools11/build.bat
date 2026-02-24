@@ -22,13 +22,19 @@
 @call :checkStageSuccessful
 
 @echo Compiling VD Tools 11
-@cl /Fo%BUILDDIR%\ /O2 /EHsc /W4 /DUNICODE^
+@cl /Fo%BUILDDIR%\ /O2 /EHsc /W4^
+ /DUNICODE^
  *.cpp ole32.lib user32.lib shell32.lib dwmapi.lib advapi32.lib %BUILDDIR%\\%RESNAME%^
  /link /out:%BUILDDIR%\\%EXENAME%
 @call :checkStageSuccessful
 
 @echo Creating installer
-@"%ProgramFiles(x86)%\NSIS\makensis.exe" %NSINAME%
+@"%ProgramFiles(x86)%\NSIS\makensis.exe"^
+ /D_BUILDDIR=%BUILDDIR% /D_CLASSNAME=%CLASSNAME% /D_WINDOWNAME=%WINDOWNAME%^
+ /D_APPNAME=%APPNAME% /D_EXENAME=%EXENAME% /D_INSTNAME=%INSTNAME%^
+ /D_UINSTNAME=%UINSTNAME% /D_STARTONHOMEFLAG=%STARTONHOMEFLAG%^
+ /D_JUMPINGFLAG=%JUMPINGFLAG% /D_DRAGGINGFLAG=%DRAGGINGFLAG%^
+ %NSINAME%
 @call :checkStageSuccessful
 
 @pause
