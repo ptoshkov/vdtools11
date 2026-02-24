@@ -45,89 +45,53 @@ DWORD prefDraggingChecked(void)
     return RegGetValueConvenience(DRAGGINGFLAG, DRAGGINGFLAG_GET_FAILMSG);
 }
 
-void prefToggleStartOnHome(void)
+DWORD Inverse(DWORD value)
 {
-    DWORD value = MF_CHECKED;
-
-    if (prefStartOnHomeChecked())
+    if (value)
     {
-        value = MF_UNCHECKED;
+        return MF_UNCHECKED;
     }
 
+    return MF_CHECKED;
+}
+
+void RegSetValueExConvenience(const WCHAR flag[], DWORD value, const WCHAR errmsg[])
+{
     HKEY hKey;
 
-    if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
-    {
-        LSTATUS result =
-            RegSetValueEx(hKey, STARTONHOMEFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
-
-        if (ERROR_SUCCESS != result)
-        {
-            MessageBox(NULL, STARTONHOMEFLAG_SET_FAILMSG, TEXT("Error"), MB_OK);
-        }
-
-        (void)RegCloseKey(hKey);
-    }
-    else
+    if (ERROR_SUCCESS != RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
     {
         MessageBox(NULL, SUBKEY_OPEN_FAILMSG, TEXT("Error"), MB_OK);
+        return;
     }
+
+    if (ERROR_SUCCESS != RegSetValueEx(hKey,
+                                       flag,
+                                       0,
+                                       REG_DWORD,
+                                       (const BYTE *)(&value),
+                                       sizeof(value)))
+    {
+        MessageBox(NULL, errmsg, TEXT("Error"), MB_OK);
+    }
+
+    (void)RegCloseKey(hKey);
+}
+
+void prefToggleStartOnHome(void)
+{
+    DWORD value = Inverse(prefStartOnHomeChecked());
+    RegSetValueExConvenience(STARTONHOMEFLAG, value, STARTONHOMEFLAG_SET_FAILMSG);
 }
 
 void prefToggleJumping(void)
 {
-    DWORD value = MF_CHECKED;
-
-    if (prefJumpingChecked())
-    {
-        value = MF_UNCHECKED;
-    }
-
-    HKEY hKey;
-
-    if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
-    {
-        LSTATUS result =
-            RegSetValueEx(hKey, JUMPINGFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
-
-        if (ERROR_SUCCESS != result)
-        {
-            MessageBox(NULL, JUMPINGFLAG_SET_FAILMSG, TEXT("Error"), MB_OK);
-        }
-
-        (void)RegCloseKey(hKey);
-    }
-    else
-    {
-        MessageBox(NULL, SUBKEY_OPEN_FAILMSG, TEXT("Error"), MB_OK);
-    }
+    DWORD value = Inverse(prefJumpingChecked());
+    RegSetValueExConvenience(JUMPINGFLAG, value, JUMPINGFLAG_SET_FAILMSG);
 }
 
 void prefToggleDragging(void)
 {
-    DWORD value = MF_CHECKED;
-
-    if (prefDraggingChecked())
-    {
-        value = MF_UNCHECKED;
-    }
-
-    HKEY hKey;
-
-    if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
-    {
-        LSTATUS result =
-            RegSetValueEx(hKey, DRAGGINGFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
-
-        if (ERROR_SUCCESS != result)
-        {
-            MessageBox(NULL, DRAGGINGFLAG_SET_FAILMSG, TEXT("Error"), MB_OK);
-        }
-
-        (void)RegCloseKey(hKey);
-    }
-    else
-    {
-        MessageBox(NULL, SUBKEY_OPEN_FAILMSG, TEXT("Error"), MB_OK);
-    }
+    DWORD value = Inverse(prefDraggingChecked());
+    RegSetValueExConvenience(DRAGGINGFLAG, value, DRAGGINGFLAG_SET_FAILMSG);
 }
