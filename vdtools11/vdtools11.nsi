@@ -16,7 +16,7 @@
   !define STARTONHOMEFLAG "StartOnHomeFlag"
   !define JUMPINGFLAG "JumpingFlag"
   !define DRAGGINGFLAG "DraggingFlag"
-  !define ADDREMOVELISTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall"
+  !define ADDREMOVELISTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
 
   ;Name and file
   Name "${APPNAME}"
@@ -112,9 +112,9 @@ Section "Install"
   ${EndIf}
 
   ;Show entry in Add/Remove Programs
-  WriteRegStr HKCU "${ADDREMOVELISTKEY}\${APPNAME}" \
+  WriteRegStr HKCU "${ADDREMOVELISTKEY}" \
                   "DisplayName" "${APPNAME}"
-  WriteRegStr HKCU "${ADDREMOVELISTKEY}\${APPNAME}" \
+  WriteRegStr HKCU "${ADDREMOVELISTKEY}" \
                   "UninstallString" "$\"$INSTDIR\${UINSTNAME}$\""
 
   ;Create uninstaller
@@ -143,7 +143,7 @@ Section "Uninstall"
   ;Delete registry keys
   SetRegView 64
   DeleteRegKey HKCU "${SUBKEY}"
-  DeleteRegKey HKCU "${ADDREMOVELISTKEY}\${APPNAME}"
+  DeleteRegKey HKCU "${ADDREMOVELISTKEY}"
 
   ;Delete start menu item
   Delete "$SMPROGRAMS\${LNKNAME}"
