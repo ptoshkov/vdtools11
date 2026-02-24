@@ -7,15 +7,17 @@
 ;General
 
   !define BUILDDIR "build"
+  !define CLASSNAME "vdtools11"
+  !define WINDOWNAME "VDTOOLS11"
   !define APPNAME "VD Tools 11"
-  !define SUBKEY "Software\${APPNAME}"
   !define EXENAME "vdtools11.exe"
-  !define LNKNAME "${APPNAME}.lnk"
   !define INSTNAME "Install.exe"
   !define UINSTNAME "Uninstall.exe"
   !define STARTONHOMEFLAG "StartOnHomeFlag"
   !define JUMPINGFLAG "JumpingFlag"
   !define DRAGGINGFLAG "DraggingFlag"
+  !define LNKNAME "${APPNAME}.lnk"
+  !define SUBKEY "Software\${APPNAME}"
   !define ADDREMOVELISTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
   !define MF_UNCHECKED 0
 
