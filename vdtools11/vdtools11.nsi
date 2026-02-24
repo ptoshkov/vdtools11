@@ -17,6 +17,7 @@
   !define JUMPINGFLAG "JumpingFlag"
   !define DRAGGINGFLAG "DraggingFlag"
   !define ADDREMOVELISTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
+  !define MF_UNCHECKED 0
 
   ;Name and file
   Name "${APPNAME}"
@@ -106,9 +107,9 @@ Section "Install"
     WriteRegStr HKCU "${SUBKEY}" "" $INSTDIR
 
     ;Store default values of settings if it's a new installation
-    WriteRegDWORD HKCU "${SUBKEY}" "${STARTONHOMEFLAG}" 0
-    WriteRegDWORD HKCU "${SUBKEY}" "${JUMPINGFLAG}" 0
-    WriteRegDWORD HKCU "${SUBKEY}" "${DRAGGINGFLAG}" 0
+    WriteRegDWORD HKCU "${SUBKEY}" "${STARTONHOMEFLAG}" ${MF_UNCHECKED}
+    WriteRegDWORD HKCU "${SUBKEY}" "${JUMPINGFLAG}" ${MF_UNCHECKED}
+    WriteRegDWORD HKCU "${SUBKEY}" "${DRAGGINGFLAG}" ${MF_UNCHECKED}
   ${EndIf}
 
   ;Show entry in Add/Remove Programs
