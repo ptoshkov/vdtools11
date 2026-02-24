@@ -11,7 +11,7 @@ extern void (*uiToggleStartOnHome)(void);
 extern void (*uiToggleJumping)(void);
 extern void (*uiToggleDragging)(void);
 void uiSetInstance(const HINSTANCE hInstance);
-void uiCreateWindow(const WCHAR szClassName[], const WCHAR szWindowName[]);
+void uiCreateWindow(void);
 void uiAddTrayIcon(void);
 void uiRegisterJumpKeys(void);
 void uiRegisterDragKeys(void);

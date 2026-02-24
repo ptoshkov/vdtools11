@@ -2,6 +2,7 @@
 #include <shellapi.h>
 
 #include "ui.h"
+#include "prop.h"
 
 #define WM_USER_TRAYICON    (WM_USER + 1)
 #define ID_TRAY_APP_ICON    (1002)
@@ -327,7 +328,7 @@ void ShowMenu(void)
 
     if (ID_MENU_ABOUT == ret)
     {
-        MessageBox(NULL, TEXT("VD Tools 11 v0.2.0."), TEXT("About"), MB_OK);
+        MessageBox(NULL, TEXT("" APPNAME " v0.2.0."), TEXT("About"), MB_OK);
     }
 
     if (ID_MENU_HELP == ret)
@@ -383,7 +384,7 @@ void uiSetInstance(const HINSTANCE hInstance)
     m_hInstance = hInstance;
 }
 
-void uiCreateWindow(const WCHAR szClassName[], const WCHAR szWindowName[])
+void uiCreateWindow(void)
 {
     if (!m_hInstance)
     {
@@ -397,11 +398,11 @@ void uiCreateWindow(const WCHAR szClassName[], const WCHAR szWindowName[])
     WNDCLASS wc = {0};
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = m_hInstance;
-    wc.lpszClassName = szClassName;
+    wc.lpszClassName = CLASSNAME;
     RegisterClass(&wc);
 
     // Create hidden window.
-    m_hWnd = CreateWindow(szClassName, szWindowName, 0,
+    m_hWnd = CreateWindow(CLASSNAME, WINDOWNAME, 0,
         0, 0, 0, 0, NULL, NULL, m_hInstance, NULL);
 
     // Subscribe to taskbar created events in case Windows Explorer restarts.
@@ -422,7 +423,7 @@ void uiAddTrayIcon(void)
     m_nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP;
     m_nid.uCallbackMessage = WM_USER_TRAYICON;
     m_nid.hIcon = LoadIcon(m_hInstance, MAKEINTRESOURCE(1));
-    lstrcpy(m_nid.szTip, TEXT("VD Tools 11"));
+    lstrcpy(m_nid.szTip, APPNAME);
     Shell_NotifyIcon(NIM_ADD, &m_nid);
 
     // NOTIFYICON_VERSION_4 is prefered

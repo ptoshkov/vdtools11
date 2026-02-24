@@ -1,68 +1,48 @@
 #include <windows.h>
 
 #include "pref.h"
+#include "prop.h"
 
-#define APPNAME TEXT("VD Tools 11")
-#define SUBKEY TEXT("Software\\" APPNAME)
-#define STARTONHOMEFLAG TEXT("StartOnHomeFlag")
-#define JUMPINGFLAG TEXT("JumpingFlag")
-#define DRAGGINGFLAG TEXT("DraggingFlag")
+#define STARTONHOMEFLAG_GET_FAILMSG TEXT("Failed to get registry value " STARTONHOMEFLAG ".")
+#define JUMPINGFLAG_GET_FAILMSG TEXT("Failed to get registry value " JUMPINGFLAG ".")
+#define DRAGGINGFLAG_GET_FAILMSG TEXT("Failed to get registry value " DRAGGINGFLAG ".")
+#define STARTONHOMEFLAG_SET_FAILMSG TEXT("Failed to set registry value " STARTONHOMEFLAG ".")
+#define JUMPINGFLAG_SET_FAILMSG TEXT("Failed to set registry value " JUMPINGFLAG ".")
+#define DRAGGINGFLAG_SET_FAILMSG TEXT("Failed to set registry value " DRAGGINGFLAG ".")
+#define SUBKEY_OPEN_FAILMSG TEXT("Failed to open registry key " SUBKEY ".")
 
-DWORD prefStartOnHomeChecked(void)
+DWORD RegGetValueConvenience(const WCHAR flag[], const WCHAR errmsg[])
 {
     DWORD value = MF_UNCHECKED;
     DWORD valuesize = sizeof(value);
 
     if (ERROR_SUCCESS != RegGetValue(HKEY_CURRENT_USER,
                                      SUBKEY,
-                                     STARTONHOMEFLAG,
+                                     flag,
                                      RRF_RT_REG_DWORD,
                                      NULL,
                                      &value,
                                      &valuesize))
     {
-        MessageBox(NULL, TEXT("Failed to obtain registry value StartOnHomeFlag."), TEXT("Error"), MB_OK);
+        MessageBox(NULL, errmsg, TEXT("Error"), MB_OK);
     }
 
     return value;
+}
+
+DWORD prefStartOnHomeChecked(void)
+{
+    return RegGetValueConvenience(STARTONHOMEFLAG, STARTONHOMEFLAG_GET_FAILMSG);
 }
 
 DWORD prefJumpingChecked(void)
 {
-    DWORD value = MF_UNCHECKED;
-    DWORD valuesize = sizeof(value);
-
-    if (ERROR_SUCCESS != RegGetValue(HKEY_CURRENT_USER,
-                                     SUBKEY,
-                                     JUMPINGFLAG,
-                                     RRF_RT_REG_DWORD,
-                                     NULL,
-                                     &value,
-                                     &valuesize))
-    {
-        MessageBox(NULL, TEXT("Failed to obtain registry value JumpingFlag."), TEXT("Error"), MB_OK);
-    }
-
-    return value;
+    return RegGetValueConvenience(JUMPINGFLAG, JUMPINGFLAG_GET_FAILMSG);
 }
 
 DWORD prefDraggingChecked(void)
 {
-    DWORD value = MF_UNCHECKED;
-    DWORD valuesize = sizeof(value);
-
-    if (ERROR_SUCCESS != RegGetValue(HKEY_CURRENT_USER,
-                                     SUBKEY,
-                                     DRAGGINGFLAG,
-                                     RRF_RT_REG_DWORD,
-                                     NULL,
-                                     &value,
-                                     &valuesize))
-    {
-        MessageBox(NULL, TEXT("Failed to obtain registry value DraggingFlag."), TEXT("Error"), MB_OK);
-    }
-
-    return value;
+    return RegGetValueConvenience(DRAGGINGFLAG, DRAGGINGFLAG_GET_FAILMSG);
 }
 
 void prefToggleStartOnHome(void)
@@ -78,8 +58,19 @@ void prefToggleStartOnHome(void)
 
     if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
     {
-        RegSetValueEx(hKey, STARTONHOMEFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
-        RegCloseKey(hKey);
+        LSTATUS result =
+            RegSetValueEx(hKey, STARTONHOMEFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
+
+        if (ERROR_SUCCESS != result)
+        {
+            MessageBox(NULL, STARTONHOMEFLAG_SET_FAILMSG, TEXT("Error"), MB_OK);
+        }
+
+        (void)RegCloseKey(hKey);
+    }
+    else
+    {
+        MessageBox(NULL, SUBKEY_OPEN_FAILMSG, TEXT("Error"), MB_OK);
     }
 }
 
@@ -96,8 +87,19 @@ void prefToggleJumping(void)
 
     if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
     {
-        RegSetValueEx(hKey, JUMPINGFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
-        RegCloseKey(hKey);
+        LSTATUS result =
+            RegSetValueEx(hKey, JUMPINGFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
+
+        if (ERROR_SUCCESS != result)
+        {
+            MessageBox(NULL, JUMPINGFLAG_SET_FAILMSG, TEXT("Error"), MB_OK);
+        }
+
+        (void)RegCloseKey(hKey);
+    }
+    else
+    {
+        MessageBox(NULL, SUBKEY_OPEN_FAILMSG, TEXT("Error"), MB_OK);
     }
 }
 
@@ -114,7 +116,18 @@ void prefToggleDragging(void)
 
     if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
     {
-        RegSetValueEx(hKey, DRAGGINGFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
-        RegCloseKey(hKey);
+        LSTATUS result =
+            RegSetValueEx(hKey, DRAGGINGFLAG, 0, REG_DWORD, (const BYTE *)(&value), sizeof(value));
+
+        if (ERROR_SUCCESS != result)
+        {
+            MessageBox(NULL, DRAGGINGFLAG_SET_FAILMSG, TEXT("Error"), MB_OK);
+        }
+
+        (void)RegCloseKey(hKey);
+    }
+    else
+    {
+        MessageBox(NULL, SUBKEY_OPEN_FAILMSG, TEXT("Error"), MB_OK);
     }
 }

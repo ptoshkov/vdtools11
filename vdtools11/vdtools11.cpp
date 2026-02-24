@@ -1,17 +1,15 @@
 #include <windows.h>
 #include <shobjidl.h>
 
+#include "prop.h"
 #include "co.h"
 #include "ui.h"
 #include "pref.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /* nCmdShow */)
 {
-    const WCHAR szClassName[] = TEXT("vdtools11");
-    const WCHAR szWindowName[] = TEXT("VDTOOLS11");
-
     // Prevent multiple instances from running.
-    if (FindWindow(szClassName, szWindowName))
+    if (FindWindow(CLASSNAME, WINDOWNAME))
     {
         MessageBox(NULL, TEXT("VD Tools 11 is already running."), TEXT("Error"), MB_OK);
         return 1;
@@ -37,7 +35,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
     uiToggleJumping = prefToggleJumping;
     uiToggleDragging = prefToggleDragging;
     uiSetInstance(hInstance);
-    uiCreateWindow(szClassName, szWindowName);
+    uiCreateWindow();
     uiAddTrayIcon();
     if (prefJumpingChecked()) uiRegisterJumpKeys();
     if (prefDraggingChecked()) uiRegisterDragKeys();
