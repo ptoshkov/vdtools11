@@ -8,16 +8,22 @@
 @set STARTONHOMEFLAG="StartOnHomeFlag"
 @set JUMPINGFLAG="JumpingFlag"
 @set DRAGGINGFLAG="DraggingFlag"
+@set RCNAME="%CLASSNAME%.rc"
+@set RESNAME="%CLASSNAME%.res"
 @set NSINAME="%CLASSNAME%.nsi"
 
 @echo Activating VS Dev CMD 64-bit
 @call "%ProgramFiles(x86)%\Microsoft Visual Studio\18\BuildTools\Common7\Tools\VsDevCmd.bat" -arch=amd64
 @call :checkStageSuccessful
 
-@echo Compiling VD Tools 11
+@echo Compiling VD Tools 11 resource file
 @if not exist %BUILDDIR% mkdir %BUILDDIR%
+@rc /fo %BUILDDIR%\\%RESNAME% %RCNAME%
+@call :checkStageSuccessful
+
+@echo Compiling VD Tools 11
 @cl /Fo%BUILDDIR%\ /O2 /EHsc /W4 /DUNICODE *.cpp^
- ole32.lib user32.lib shell32.lib dwmapi.lib advapi32.lib^
+ ole32.lib user32.lib shell32.lib dwmapi.lib advapi32.lib %BUILDDIR%\\%RESNAME%^
  /link /out:%BUILDDIR%\\%EXENAME%
 @call :checkStageSuccessful
 
