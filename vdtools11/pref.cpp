@@ -3,14 +3,6 @@
 #include "pref.h"
 #include "prop.h"
 
-#define STARTONHOMEFLAG_GET_FAILMSG TEXT("Failed to get registry value " STARTONHOMEFLAG ".")
-#define JUMPINGFLAG_GET_FAILMSG TEXT("Failed to get registry value " JUMPINGFLAG ".")
-#define DRAGGINGFLAG_GET_FAILMSG TEXT("Failed to get registry value " DRAGGINGFLAG ".")
-#define STARTONHOMEFLAG_SET_FAILMSG TEXT("Failed to set registry value " STARTONHOMEFLAG ".")
-#define JUMPINGFLAG_SET_FAILMSG TEXT("Failed to set registry value " JUMPINGFLAG ".")
-#define DRAGGINGFLAG_SET_FAILMSG TEXT("Failed to set registry value " DRAGGINGFLAG ".")
-#define SUBKEY_OPEN_FAILMSG TEXT("Failed to open registry key " SUBKEY ".")
-
 DWORD RegGetValueConvenience(const WCHAR flag[], const WCHAR errmsg[])
 {
     DWORD value = MF_UNCHECKED;
@@ -32,17 +24,17 @@ DWORD RegGetValueConvenience(const WCHAR flag[], const WCHAR errmsg[])
 
 DWORD prefStartOnHomeChecked(void)
 {
-    return RegGetValueConvenience(STARTONHOMEFLAG, STARTONHOMEFLAG_GET_FAILMSG);
+    return RegGetValueConvenience(STARTONHOMEFLAG, TEXT("Failed to get registry value " STARTONHOMEFLAG "."));
 }
 
 DWORD prefJumpingChecked(void)
 {
-    return RegGetValueConvenience(JUMPINGFLAG, JUMPINGFLAG_GET_FAILMSG);
+    return RegGetValueConvenience(JUMPINGFLAG, TEXT("Failed to get registry value " JUMPINGFLAG "."));
 }
 
 DWORD prefDraggingChecked(void)
 {
-    return RegGetValueConvenience(DRAGGINGFLAG, DRAGGINGFLAG_GET_FAILMSG);
+    return RegGetValueConvenience(DRAGGINGFLAG, TEXT("Failed to get registry value " DRAGGINGFLAG "."));
 }
 
 DWORD Inverse(DWORD value)
@@ -61,7 +53,7 @@ void RegSetValueExConvenience(const WCHAR flag[], DWORD value, const WCHAR errms
 
     if (ERROR_SUCCESS != RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
     {
-        MessageBox(NULL, SUBKEY_OPEN_FAILMSG, TEXT("Error"), MB_OK);
+        MessageBox(NULL, TEXT("Failed to open registry key " SUBKEY "."), TEXT("Error"), MB_OK);
         return;
     }
 
@@ -81,17 +73,17 @@ void RegSetValueExConvenience(const WCHAR flag[], DWORD value, const WCHAR errms
 void prefToggleStartOnHome(void)
 {
     DWORD value = Inverse(prefStartOnHomeChecked());
-    RegSetValueExConvenience(STARTONHOMEFLAG, value, STARTONHOMEFLAG_SET_FAILMSG);
+    RegSetValueExConvenience(STARTONHOMEFLAG, value, TEXT("Failed to set registry value " STARTONHOMEFLAG "."));
 }
 
 void prefToggleJumping(void)
 {
     DWORD value = Inverse(prefJumpingChecked());
-    RegSetValueExConvenience(JUMPINGFLAG, value, JUMPINGFLAG_SET_FAILMSG);
+    RegSetValueExConvenience(JUMPINGFLAG, value, TEXT("Failed to set registry value " JUMPINGFLAG "."));
 }
 
 void prefToggleDragging(void)
 {
     DWORD value = Inverse(prefDraggingChecked());
-    RegSetValueExConvenience(DRAGGINGFLAG, value, DRAGGINGFLAG_SET_FAILMSG);
+    RegSetValueExConvenience(DRAGGINGFLAG, value, TEXT("Failed to set registry value " DRAGGINGFLAG "."));
 }
