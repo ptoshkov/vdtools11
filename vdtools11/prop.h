@@ -3,8 +3,16 @@
 #define ARG_TO_STR(ARG) #ARG
 #define MACRO_EXPANSION_TO_STR(MACRO) ARG_TO_STR(MACRO)
 
+#ifndef _REPODIR
+#error _REPODIR not defined
+#endif
+
 #ifndef _BUILDDIR
 #error _BUILDDIR not defined
+#endif
+
+#ifndef _RESOURCESDIR
+#error _RESOURCESDIR not defined
 #endif
 
 #ifndef _CLASSNAME

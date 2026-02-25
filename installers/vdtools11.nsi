@@ -6,7 +6,9 @@
 ;--------------------------------
 ;General
 
+  !define REPODIR "${_REPODIR}"
   !define BUILDDIR "${_BUILDDIR}"
+  !define RESOURCESDIR "${_RESOURCESDIR}"
   !define CLASSNAME "${_CLASSNAME}"
   !define WINDOWNAME "${_WINDOWNAME}"
   !define APPNAME "${_APPNAME}"
@@ -18,6 +20,7 @@
   !define DRAGGINGFLAG "${_DRAGGINGFLAG}"
   !define LNKNAME "${APPNAME}.lnk"
   !define ICONAME "${CLASSNAME}.ico"
+  !define ICOPATH "${RESOURCESDIR}\${ICONAME}"
   !define SUBKEY "Software\${APPNAME}"
   !define ADDREMOVELISTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
   !define MF_UNCHECKED 0
@@ -67,8 +70,8 @@ FunctionEnd
 ;--------------------------------
 ;Interface Settings
 
-  !define MUI_ICON "${ICONAME}"
-  !define MUI_UNICON "${ICONAME}"
+  !define MUI_ICON "${ICOPATH}"
+  !define MUI_UNICON "${ICOPATH}"
   !define MUI_ABORTWARNING
   !define MUI_FINISHPAGE_RUN
   !define MUI_FINISHPAGE_RUN_FUNCTION "CreateAutoStartupShortcut"
@@ -78,7 +81,7 @@ FunctionEnd
 ;Pages
 
   !insertmacro MUI_PAGE_WELCOME
-  !insertmacro MUI_PAGE_LICENSE "..\LICENSE.txt"
+  !insertmacro MUI_PAGE_LICENSE "${REPODIR}\LICENSE.txt"
   !define MUI_PAGE_CUSTOMFUNCTION_PRE "SkipDirectorySelection"
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
