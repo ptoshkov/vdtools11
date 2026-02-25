@@ -24,6 +24,12 @@ Virtual desktop 1 was brought in focus and the active window was moved to virtua
 5. Press CTRL + ALT + WIN + →.![a1b213d0-fa74-45bb-840c-43cec4e2408e](https://github.com/user-attachments/assets/1b13cb8b-dc01-46c0-af88-650bf44539a4)
 Virtual desktop 2 was brought in focus and the active window was moved to virtual desktop 2.
 
+## Build From Source
+In order to build VD Tools 11 from source you need to have the following prerequisites installed:
+- Build Tools for Visual Studio 2022 or newer (https://aka.ms/vs/stable/vs_BuildTools.exe)
+- NSIS (https://nsis.sourceforge.io/Main_Page)
+
+Clone the repo and run build.bat. The installer will be located in the folder build/.
 
 ## FAQ
 ### Why does the option to start on the leftmost virtual desktop exist?
