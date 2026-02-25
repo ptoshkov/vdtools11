@@ -10,8 +10,7 @@ Lightweight extension for Windows 11 virtual desktops with three core features:
 1. Create four virtual desktops:
 <img width="1027" height="169" alt="a1b508cf-e2f3-48b8-af71-98280277126f" src="https://github.com/user-attachments/assets/7497d703-7f5b-4537-80d9-f3b3f824ab41" />
 
-2. Make sure VD Tools 11 is running and the keyboard shortcuts are enabled:
-<img width="290" height="147" alt="3b81b598-f81f-4878-bf6e-2f9b20521d7b" src="https://github.com/user-attachments/assets/e9fe323c-50c6-45ac-b768-60c8e531008d" />
+2. Make sure VD Tools 11 is running and the keyboard shortcuts are enabled.
 
 3. Press CTRL + ALT + WIN + 4.
 ![bf4180c7-0dcb-445c-8624-6f9aa51d6d88](https://github.com/user-attachments/assets/4a7bf078-556c-4745-911e-c7e5aee48dfe)
