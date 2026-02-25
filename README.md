@@ -6,7 +6,7 @@ Lightweight extension for Windows 11 virtual desktops with three core features:
 - Move window to adjacent desktop using keyboard shortcut
 
 
-# Tutorial
+## Tutorial
 1. Create four virtual desktops:
 <img width="1027" height="169" alt="a1b508cf-e2f3-48b8-af71-98280277126f" src="https://github.com/user-attachments/assets/7497d703-7f5b-4537-80d9-f3b3f824ab41" />
 
@@ -25,12 +25,12 @@ Virtual desktop 1 was brought in focus and the active window was moved to virtua
 Virtual desktop 2 was brought in focus and the active window was moved to virtual desktop 2.
 
 
-# FAQ
-Q: Why does the option to start on the leftmost virtual desktop exist?\
-A: Windows 11, unlike Windows 10, boots on the virtual desktop which was last in use. If you enable the option to start on the leftmost virtual desktop and you enabled VD Tools 11 autostart, you will get the same behavior as Windows 10.
+## FAQ
+### Why does the option to start on the leftmost virtual desktop exist?
+Windows 11, unlike Windows 10, boots on the virtual desktop which was last in use. If you enable the option to start on the leftmost virtual desktop and you enabled VD Tools 11 autostart, you will get the same behavior as Windows 10.
 
-Q: If a window is part of a snap group and I move it to another virtual desktop, will the whole group move with it?\
-A: Yes, the whole group will move to the new virtual desktop, preserving the window layout.
+### If a window is part of a snap group and I move it to another virtual desktop, will the whole group move with it?
+Yes, the whole group will move to the new virtual desktop, preserving the window layout.
 
-Q: If VD Tools 11 is written in C++, why doesn't it make use of more C++ features?\
-A: VD Tools 11 is a Petzold-style application, i.e. it uses mostly plain C.
+### If VD Tools 11 is written in C++, why doesn't it make use of more C++ features?
+VD Tools 11 is a Petzold-style application, i.e. it uses mostly plain C.
