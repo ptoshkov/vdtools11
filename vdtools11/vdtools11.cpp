@@ -2,6 +2,7 @@
 #include <shobjidl.h>
 
 #include "prop.h"
+#include "log.h"
 #include "co.h"
 #include "ui.h"
 #include "pref.h"
@@ -11,15 +12,18 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
     // Prevent multiple instances from running.
     if (FindWindow(CLASSNAME, WINDOWNAME))
     {
-        MessageBox(NULL, TEXT("VD Tools 11 is already running."), TEXT("Error"), MB_OK);
+        logError(TEXT("VD Tools 11 is already running."));
         return 1;
     }
 
     if (FAILED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
     {
-        MessageBox(NULL, TEXT("Could not initialize COM."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not initialize COM."));
         return 1;
     }
+
+    // log setup.
+    logStart();
 
     // co setup.
     coCreateInstances();
@@ -44,6 +48,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
 
     // co destroy.
     coReleaseInstances();
+
+    // log destroy.
+    logStop();
 
     CoUninitialize();
 

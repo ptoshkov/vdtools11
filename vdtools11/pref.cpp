@@ -2,6 +2,7 @@
 
 #include "pref.h"
 #include "prop.h"
+#include "log.h"
 
 DWORD RegGetValueConvenience(const WCHAR flag[], const WCHAR errmsg[])
 {
@@ -16,7 +17,7 @@ DWORD RegGetValueConvenience(const WCHAR flag[], const WCHAR errmsg[])
                                      &value,
                                      &valuesize))
     {
-        MessageBox(NULL, errmsg, TEXT("Error"), MB_OK);
+        logError(errmsg);
     }
 
     return value;
@@ -53,7 +54,7 @@ void RegSetValueExConvenience(const WCHAR flag[], DWORD value, const WCHAR errms
 
     if (ERROR_SUCCESS != RegOpenKeyEx(HKEY_CURRENT_USER, SUBKEY, 0, KEY_WRITE, &hKey))
     {
-        MessageBox(NULL, TEXT("Failed to open registry key " SUBKEY "."), TEXT("Error"), MB_OK);
+        logError(TEXT("Failed to open registry key " SUBKEY "."));
         return;
     }
 
@@ -64,7 +65,7 @@ void RegSetValueExConvenience(const WCHAR flag[], DWORD value, const WCHAR errms
                                        (const BYTE *)(&value),
                                        sizeof(value)))
     {
-        MessageBox(NULL, errmsg, TEXT("Error"), MB_OK);
+        logError(errmsg);
     }
 
     (void)RegCloseKey(hKey);

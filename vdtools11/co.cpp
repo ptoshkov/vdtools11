@@ -3,6 +3,7 @@
 #include <dwmapi.h>
 
 #include "co.h"
+#include "log.h"
 
 const CLSID CLSID_ImmersiveShell =
     {0xC2F03A33, 0x21F5, 0x47FA, 0xB4, 0xBB, 0x15, 0x63, 0x62, 0xA2, 0xF2, 0x39};
@@ -66,7 +67,7 @@ void coCreateInstances(void)
 
     if (FAILED(hr))
     {
-        MessageBox(NULL, TEXT("Could not create Virtual Desktop Manager object."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not create Virtual Desktop Manager object."));
         return;
     }
 
@@ -75,7 +76,7 @@ void coCreateInstances(void)
 
     if (FAILED(hr))
     {
-        MessageBox(NULL, TEXT("Could not create Service Provider object."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not create Service Provider object."));
         return;
     }
 
@@ -84,7 +85,7 @@ void coCreateInstances(void)
 
     if (FAILED(hr))
     {
-        MessageBox(NULL, TEXT("Could not create Virtual Desktop Manager Internal object."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not create Virtual Desktop Manager Internal object."));
         return;
     }
 }

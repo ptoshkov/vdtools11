@@ -2,6 +2,7 @@
 #include <shellapi.h>
 
 #include "ui.h"
+#include "log.h"
 #include "prop.h"
 
 #define WM_USER_TRAYICON    (WM_USER + 1)
@@ -57,94 +58,94 @@ void uiRegisterJumpKeys(void)
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY1, modifiers, '1'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 1."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 1."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY2, modifiers, '2'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 2."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 2."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY3, modifiers, '3'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 3."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 3."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY4, modifiers, '4'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 4."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 4."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY5, modifiers, '5'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 5."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 5."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY6, modifiers, '6'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 6."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 6."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY7, modifiers, '7'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 7."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 7."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY8, modifiers, '8'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 8."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 8."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY9, modifiers, '9'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 9."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 9."));
     }
 
     modifiers = (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT | MOD_SHIFT | MOD_WIN);
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY10, modifiers, '1'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 10."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 10."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY11, modifiers, '2'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 11."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 11."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY12, modifiers, '3'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 12."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 12."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY13, modifiers, '4'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 13."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 13."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY14, modifiers, '5'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 14."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 14."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY15, modifiers, '6'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 15."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 15."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY16, modifiers, '7'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 16."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 16."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY17, modifiers, '8'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 17."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 17."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY18, modifiers, '9'))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 18."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 18."));
     }
 }
 
@@ -159,12 +160,12 @@ void uiRegisterDragKeys(void)
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY19, modifiers, VK_LEFT))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 19."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 19."));
     }
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY20, modifiers, VK_RIGHT))
     {
-        MessageBox(NULL, TEXT("Could not register hot key 20."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not register hot key 20."));
     }
 }
 
@@ -177,92 +178,92 @@ void UnregisterJumpKeys(void)
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY1))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 1."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 1."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY2))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 2."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 2."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY3))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 3."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 3."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY4))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 4."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 4."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY5))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 5."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 5."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY6))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 6."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 6."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY7))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 7."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 7."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY8))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 8."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 8."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY9))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 9."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 9."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY10))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 10."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 10."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY11))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 11."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 11."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY12))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 12."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 12."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY13))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 13."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 13."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY14))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 14."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 14."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY15))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 15."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 15."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY16))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 16."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 16."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY17))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 17."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 17."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY18))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 18."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 18."));
     }
 }
 
@@ -275,12 +276,12 @@ void UnregisterDragKeys(void)
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY19))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 19."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 19."));
     }
 
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY20))
     {
-        MessageBox(NULL, TEXT("Could not unregister hot key 20."), TEXT("Error"), MB_OK);
+        logError(TEXT("Could not unregister hot key 20."));
     }
 }
 

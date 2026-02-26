@@ -13,6 +13,7 @@
   !define WINDOWNAME "${_WINDOWNAME}"
   !define APPNAME "${_APPNAME}"
   !define EXENAME "${_EXENAME}"
+  !define LOGNAME "${_LOGNAME}"
   !define INSTNAME "${_INSTNAME}"
   !define UINSTNAME "${_UINSTNAME}"
   !define STARTONHOMEFLAG "${_STARTONHOMEFLAG}"
@@ -146,6 +147,8 @@ Section "Uninstall"
   Delete "$INSTDIR\${EXENAME}"
 
   Delete "$INSTDIR\${UINSTNAME}"
+
+  Delete "$INSTDIR\${LOGNAME}"
 
   RMDir "$INSTDIR"
 
