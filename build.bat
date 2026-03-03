@@ -48,6 +48,8 @@
 @echo ################################## Running unit tests ##################################
 @cl /Fo"%BUILDDIR%\\" /Fe"%BUILDDIR%\\" /O2 /EHsc /W4 /I "%VDTOOLS11SDIR%" /wd4273 /DUNICODE %DEFINES% "%QADIR%\preftest.cpp"
 
+:: Find all files in the build directory which match the expression "*test.exe"
+:: and run them.
 for %%f in ("%BUILDDIR%\*test.exe") do (
     %%f
 )

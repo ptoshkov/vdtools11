@@ -1,4 +1,11 @@
+# include <assert.h>
+
 #include "pref.cpp"
+
+/* ------------------------------- MOCK FUNCTIONS START ------------------------------- */
+// Mock all functions and classes which are external to the
+// component under test, such as Windows API functions, library
+// functions and functions defined in the other components.
 
 LSTATUS
 RegGetValueW(
@@ -54,7 +61,20 @@ RegCloseKey(
     return ERROR_SUCCESS;
 }
 
+/* ------------------------------- MOCK FUNCTIONS END ------------------------------- */
+
+/* ------------------------------- UNIT TESTS START ------------------------------- */
+
+void InverseTest(void)
+{
+    assert(MF_CHECKED == Inverse(MF_UNCHECKED) && "Inverse of MF_UNCHECKED is wrong.");
+    assert(MF_UNCHECKED == Inverse(MF_CHECKED) && "Inverse of MF_CHECKED is wrong.");
+}
+
+/* ------------------------------- UNIT TESTS END ------------------------------- */
+
 int main(void)
 {
+    InverseTest();
     return 0;
 }
