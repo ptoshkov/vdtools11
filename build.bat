@@ -15,6 +15,7 @@
 @set VDTOOLS11SDIR=%REPODIR%\vdtools11
 @set LIBDIR=%REPODIR%\libraries
 @set CPPLOGDIR=%LIBDIR%\cpplog
+@set QADIR=%REPODIR%\qa
 @set RCNAME=%CLASSNAME%.rc
 @set RESNAME=%CLASSNAME%.res
 @set NSINAME=%CLASSNAME%.nsi
@@ -26,26 +27,31 @@
 
 @if not exist "%BUILDDIR%" mkdir "%BUILDDIR%"
 
-@echo Activating VS Dev CMD 64-bit
+@echo ################################## Activating VS Dev CMD 64-bit ##################################
 @call "%ProgramFiles(x86)%\Microsoft Visual Studio\18\BuildTools\Common7\Tools\VsDevCmd.bat" -arch=amd64
 @call :checkStageSuccessful
 
-@echo Compiling VD Tools 11 resource file
+@echo ################################## Compiling VD Tools 11 resource file ##################################
 @rc /fo "%BUILDDIR%\%RESNAME%" "%RESOURCESDIR%\%RCNAME%"
 @call :checkStageSuccessful
 
-@echo Compiling VD Tools 11
-@cl /Fo"%BUILDDIR%\\" /O2 /EHsc /W4 /I "%CPPLOGDIR%" /DUNICODE^
- %DEFINES%^
- "%VDTOOLS11SDIR%\*.cpp"^
- ole32.lib user32.lib shell32.lib dwmapi.lib advapi32.lib "%BUILDDIR%\%RESNAME%"^
+@echo ################################## Compiling VD Tools 11 ##################################
+@cl /Fo"%BUILDDIR%\\" /O2 /EHsc /W4 /I "%CPPLOGDIR%" /DUNICODE %DEFINES%^
+ "%VDTOOLS11SDIR%\*.cpp" ole32.lib user32.lib shell32.lib dwmapi.lib advapi32.lib "%BUILDDIR%\%RESNAME%"^
  /link /out:"%BUILDDIR%\%EXENAME%"
 @call :checkStageSuccessful
 
-@echo Creating installer
-@"%ProgramFiles(x86)%\NSIS\makensis.exe"^
- %DEFINES%^
- "%INSTALLERSDIR%\%NSINAME%"
+@echo ################################## Creating installer ##################################
+@"%ProgramFiles(x86)%\NSIS\makensis.exe" %DEFINES% "%INSTALLERSDIR%\%NSINAME%"
+@call :checkStageSuccessful
+
+@echo ################################## Running unit tests ##################################
+@cl /Fo"%BUILDDIR%\\" /Fe"%BUILDDIR%\\" /O2 /EHsc /W4 /I "%VDTOOLS11SDIR%" /wd4273 /DUNICODE %DEFINES% "%QADIR%\preftest.cpp"
+
+for %%f in ("%BUILDDIR%\*test.exe") do (
+    %%f
+)
+
 @call :checkStageSuccessful
 
 @pause
