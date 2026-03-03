@@ -1,5 +1,7 @@
 #pragma once
 
+#include <windows.h>
+
 #define ARG_TO_STR(ARG) #ARG
 #define MACRO_EXPANSION_TO_STR(MACRO) ARG_TO_STR(MACRO)
 
