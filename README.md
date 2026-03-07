@@ -47,6 +47,9 @@ VD Tools 11 focuses on a window in the new virtual desktop when you navigate to 
 
 Additionally, VD Tools 11 provides the ability to move a window to any virtual desktop with a single shortcut press. Windows grouped together in a snap group can be moved simultaneously.
 
+### Can VD Tools 11 be used on Windows 10?
+Since VD Tools 11 came about after support for Windows 10 ended, it was decided not to support Windows 10. There is a branch called win10-22h2 which contains a port of VD Tools 11 for Windows 10 22H2 with limited functionality.
+
 ### Why does VD Tools 11 have so few features?
 VD Tools 11 abides by the Unix philosophy of doing one thing and doing it well.
 
