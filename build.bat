@@ -11,6 +11,14 @@
 @set STARTONHOMEFLAG=StartOnHomeFlag
 @set JUMPINGFLAG=JumpingFlag
 @set DRAGGINGFLAG=DraggingFlag
+@set DEFINES=/D_REPODIR="%REPODIR%" /D_BUILDDIR="%BUILDDIR%" /D_RESOURCESDIR="%RESOURCESDIR%"^
+ /D_CLASSNAME="%CLASSNAME%" /D_WINDOWNAME="%WINDOWNAME%" /D_APPNAME="%APPNAME%"^
+ /D_EXENAME="%EXENAME%" /D_LOGNAME="%LOGNAME%"^
+ /D_INSTNAME="%INSTNAME%" /D_UINSTNAME="%UINSTNAME%"^
+ /D_STARTONHOMEFLAG="%STARTONHOMEFLAG%" /D_JUMPINGFLAG="%JUMPINGFLAG%" /D_DRAGGINGFLAG="%DRAGGINGFLAG%"
+
+@set VSDEVCMD2022=%ProgramFiles(x86)%\Microsoft Visual Studio\2022\BuildTools\Common7\Tools\VsDevCmd.bat
+@set VSDEVCMD2026=%ProgramFiles(x86)%\Microsoft Visual Studio\18\BuildTools\Common7\Tools\VsDevCmd.bat
 @set INSTALLERSDIR=%REPODIR%\installers
 @set VDTOOLS11SDIR=%REPODIR%\vdtools11
 @set LIBDIR=%REPODIR%\libraries
@@ -19,16 +27,13 @@
 @set RCNAME=%CLASSNAME%.rc
 @set RESNAME=%CLASSNAME%.res
 @set NSINAME=%CLASSNAME%.nsi
-@set DEFINES=/D_REPODIR="%REPODIR%" /D_BUILDDIR="%BUILDDIR%" /D_RESOURCESDIR="%RESOURCESDIR%"^
- /D_CLASSNAME="%CLASSNAME%" /D_WINDOWNAME="%WINDOWNAME%" /D_APPNAME="%APPNAME%"^
- /D_EXENAME="%EXENAME%" /D_LOGNAME="%LOGNAME%"^
- /D_INSTNAME="%INSTNAME%" /D_UINSTNAME="%UINSTNAME%"^
- /D_STARTONHOMEFLAG="%STARTONHOMEFLAG%" /D_JUMPINGFLAG="%JUMPINGFLAG%" /D_DRAGGINGFLAG="%DRAGGINGFLAG%"
 
 @if not exist "%BUILDDIR%" mkdir "%BUILDDIR%"
 
 @echo ################################## Activating VS Dev CMD 64-bit ##################################
-@call "%ProgramFiles(x86)%\Microsoft Visual Studio\18\BuildTools\Common7\Tools\VsDevCmd.bat" -arch=amd64
+@if exist "%VSDEVCMD2022%" set VSDEVCMD=%VSDEVCMD2022%
+@if exist "%VSDEVCMD2026%" set VSDEVCMD=%VSDEVCMD2026%
+@call "%VSDEVCMD%" -arch=amd64
 @call :checkStageSuccessful
 
 @echo ################################## Compiling VD Tools 11 resource file ##################################
