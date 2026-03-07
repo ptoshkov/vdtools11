@@ -2,10 +2,9 @@
 <img width="500" height="500" alt="vdtools11" src="https://github.com/user-attachments/assets/aa295e9d-dcd1-4d93-b293-ce965a904e9b" />
 
 Lightweight extension for Windows 11 virtual desktops with three core features:
-- Start on leftmost virtual desktop
-- Jump to arbitrary virtual desktop using keyboard shortcut
-- Move window to adjacent desktop using keyboard shortcut
-
+- Jump to an arbitrary virtual desktop via keyboard shortcut
+- Move a window to an arbitrary virtual desktop via keyboard shortcut
+- Move a window to an adjacent virtual desktop via keyboard shortcut
 
 ## Tutorial
 1. Create four virtual desktops:
@@ -33,10 +32,23 @@ Clone the repo and run build.bat. The installer will be located in the folder bu
 
 ## FAQ
 ### Why does the option to start on the leftmost virtual desktop exist?
-Windows 11, unlike Windows 10, boots on the virtual desktop which was last in use. If you enable the option to start on the leftmost virtual desktop and you enabled VD Tools 11 autostart, you will get the same behavior as Windows 10.
+Windows 11, unlike Windows 10, boots on the virtual desktop which was last in use. If you enabled VD Tools 11 autostart during installation and you enable the option to start on the leftmost virtual desktop in the VD Tools 11 menu, you will get the behavior from Windows 10 back.
 
 ### If a window is part of a snap group and I move it to another virtual desktop, will the whole group move with it?
 Yes, the whole group will move to the new virtual desktop, preserving the window layout.
+
+### What similar tools exist?
+- Windows Virtual Desktop Helper (https://github.com/dankrusi/WindowsVirtualDesktopHelper) - provides the ability to jump to an arbitrary virtual desktop via keyboard shortcut
+- SylphyHornPlus (https://github.com/hwtnb/SylphyHornPlusWin11) - provides the ability to move a window to an adjacent virtual desktop via keyboard shortcut
+- VirtualDesktop (https://github.com/MScholtes/VirtualDesktop) - C# CLI tool to manage virtual desktops
+
+### How does VD Tools 11 compare to the other tools?
+VD Tools 11 focuses on a window in the new virtual desktop when you navigate to it via keyboard shortcut. This is the same behavior provided by Windows when you navigate to a virtual desktop using Task View or the built-in CTRL + WIN + ←/→ shortcut.
+
+Additionally, VD Tools 11 provides the ability to move a window to any virtual desktop with a single shortcut press. Windows grouped together in a snap group can be moved simultaneously.
+
+### Why does VD Tools 11 have so few features?
+VD Tools 11 abides by the Unix philosophy of doing one thing and doing it well.
 
 ### If VD Tools 11 is written in C++, why doesn't it make use of more C++ features?
 VD Tools 11 is a Petzold-style application, i.e. it uses mostly plain C.
