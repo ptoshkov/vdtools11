@@ -35,7 +35,7 @@ Clone the repo and run build.bat. The installer will be located in the folder bu
 Windows 11, unlike Windows 10, boots on the virtual desktop which was last in use. If you enabled VD Tools 11 autostart during installation and you enable the option to start on the leftmost virtual desktop in the VD Tools 11 menu, you will get the behavior from Windows 10 back.
 
 ### If a window is part of a snap group and I move it to another virtual desktop, will the whole group move with it?
-Yes, the whole group will move to the new virtual desktop, preserving the window layout.
+No, the window will be taken out of the snap group and moved. The rest of the windows in the snap group will not be affected.
 
 ### What similar tools exist?
 - Windows Virtual Desktop Helper (https://github.com/dankrusi/WindowsVirtualDesktopHelper) - provides the ability to jump to an arbitrary virtual desktop via keyboard shortcut
@@ -45,7 +45,7 @@ Yes, the whole group will move to the new virtual desktop, preserving the window
 ### How does VD Tools 11 compare to the other tools?
 VD Tools 11 focuses on a window in the new virtual desktop when you navigate to it via keyboard shortcut. This is the same behavior provided by Windows when you navigate to a virtual desktop using Task View or the built-in CTRL + WIN + ←/→ shortcut.
 
-Additionally, VD Tools 11 provides the ability to move a window to any virtual desktop with a single shortcut press. Windows grouped together in a snap group can be moved simultaneously.
+Additionally, VD Tools 11 provides the ability to move a window to any virtual desktop with a single shortcut press.
 
 ### Can VD Tools 11 be used on Windows 10?
 Since VD Tools 11 came about after support for Windows 10 ended, it was decided not to support Windows 10. There is a branch called win10-22h2 which contains a port of VD Tools 11 for Windows 10 22H2 with limited functionality.
