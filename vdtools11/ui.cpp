@@ -101,6 +101,8 @@ void uiRegisterJumpKeys(void)
         logError(TEXT("Could not register hot key 9."));
     }
 
+    return;
+
     modifiers = (MOD_ALT | MOD_CONTROL | MOD_NOREPEAT | MOD_SHIFT | MOD_WIN);
 
     if (!RegisterHotKey(m_hWnd, ID_HOTKEY10, modifiers, '1'))
@@ -221,6 +223,8 @@ void UnregisterJumpKeys(void)
         logError(TEXT("Could not unregister hot key 9."));
     }
 
+    return;
+
     if (!UnregisterHotKey(m_hWnd, ID_HOTKEY10))
     {
         logError(TEXT("Could not unregister hot key 10."));
@@ -296,7 +300,7 @@ void ShowMenu(void)
 
     AppendMenu(hMenu, MF_STRING | uiStartOnHomeChecked(), ID_MENU_ITEM1, TEXT("Switch To Desktop 1 On Start"));
     AppendMenu(hMenu, MF_STRING | uiJumpingChecked(), ID_MENU_ITEM2, TEXT("Jump To Desktop Using Shortcut"));
-    AppendMenu(hMenu, MF_STRING | uiDraggingChecked(), ID_MENU_ITEM3, TEXT("Move Windows To Adjacent Desktop"));
+    AppendMenu(hMenu, MF_STRING | uiDraggingChecked() | MF_GRAYED, ID_MENU_ITEM3, TEXT("Move Windows To Adjacent Desktop"));
 
     AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
     AppendMenu(hMenu, MF_STRING, ID_MENU_ABOUT, TEXT("About"));
@@ -329,7 +333,7 @@ void ShowMenu(void)
 
     if (ID_MENU_ABOUT == ret)
     {
-        MessageBox(NULL, TEXT("" APPNAME " v0.2.0."), TEXT("About"), MB_OK);
+        MessageBox(NULL, TEXT("" APPNAME " Windows 10 22H2."), TEXT("About"), MB_OK);
     }
 
     if (ID_MENU_HELP == ret)
