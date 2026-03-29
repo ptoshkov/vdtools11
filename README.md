@@ -31,6 +31,9 @@ In order to build VD Tools 11 from source you need to have the following prerequ
 Clone the repo and run build.bat. The installer will be located in the folder build/.
 
 ## FAQ
+### Does VD Tools 11 require administrator privileges to install?
+No, VD Tools 11 is installed for the current user and does not require administrator privileges.
+
 ### Why does the option to start on the leftmost virtual desktop exist?
 Windows 11, unlike Windows 10, boots on the virtual desktop which was last in use. If you enabled VD Tools 11 autostart during installation and you enable the option to start on the leftmost virtual desktop in the VD Tools 11 menu, you will get the behavior from Windows 10 back.
 
