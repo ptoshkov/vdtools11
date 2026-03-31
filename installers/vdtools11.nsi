@@ -2,6 +2,7 @@
 ;Include Modern UI
 
   !include "MUI2.nsh"
+  !include "WinVer.nsh"
 
 ;--------------------------------
 ;General
@@ -46,6 +47,13 @@ Function .onInit
 
   ${If} "$0" != ""
     StrCpy $INSTDIR "$0"
+  ${EndIf}
+
+  ;Check Windows version
+  ${IfNot} ${AtLeastWin11}
+  ${AndIfNot} ${AtLeastBuild} 22000
+    MessageBox MB_OK "Operating system not supported."
+    Quit
   ${EndIf}
 FunctionEnd
 

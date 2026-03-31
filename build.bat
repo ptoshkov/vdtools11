@@ -74,4 +74,6 @@ exit 0
     pause
     exit 1
 )
+echo.
+echo.
 exit /b 0
