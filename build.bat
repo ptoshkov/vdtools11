@@ -27,6 +27,7 @@
 @set RCNAME=%CLASSNAME%.rc
 @set RESNAME=%CLASSNAME%.res
 @set NSINAME=%CLASSNAME%.nsi
+@set ARCHNAME=Install.zip
 
 @if not exist "%BUILDDIR%" mkdir "%BUILDDIR%"
 
@@ -48,6 +49,10 @@
 
 @echo ################################## Creating installer ##################################
 @"%ProgramFiles(x86)%\NSIS\makensis.exe" %DEFINES% "%INSTALLERSDIR%\%NSINAME%"
+@call :checkStageSuccessful
+
+@echo ################################## Creating archive ##################################
+tar -avcf "%BUILDDIR%\%ARCHNAME%" --directory "%BUILDDIR%" "%INSTNAME%"
 @call :checkStageSuccessful
 
 @echo ################################## Running unit tests ##################################
