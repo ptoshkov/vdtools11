@@ -17,6 +17,9 @@
   !define LOGNAME "${_LOGNAME}"
   !define INSTNAME "${_INSTNAME}"
   !define UINSTNAME "${_UINSTNAME}"
+  !define MAJORVER "${_MAJORVER}"
+  !define MINORVER "${_MINORVER}"
+  !define PATCHVER "${_PATCHVER}"
   !define STARTONHOMEFLAG "${_STARTONHOMEFLAG}"
   !define JUMPINGFLAG "${_JUMPINGFLAG}"
   !define DRAGGINGFLAG "${_DRAGGINGFLAG}"
@@ -26,6 +29,9 @@
   !define SUBKEY "Software\${APPNAME}"
   !define ADDREMOVELISTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
   !define MF_UNCHECKED 0
+  !define MAJORVERFLAG "MAJORVER"
+  !define MINORVERFLAG "MINORVER"
+  !define PATCHVERFLAG "PATCHVER"
 
   ;Name and file
   Name "${APPNAME}"
@@ -42,18 +48,29 @@
 ;On init callback
 
 Function .onInit
-  SetRegView 64
-  ReadRegStr $0 HKCU "${SUBKEY}" ""
-
-  ${If} "$0" != ""
-    StrCpy $INSTDIR "$0"
-  ${EndIf}
-
   ;Check Windows version
   ${IfNot} ${AtLeastWin11}
   ${AndIfNot} ${AtLeastBuild} 22000
     MessageBox MB_OK "Operating system not supported."
     Quit
+  ${EndIf}
+
+  SetRegView 64
+  ReadRegStr $0 HKCU "${SUBKEY}" ""
+
+  ;Check if a previous installation exists
+  ${If} "$0" != ""
+    ;Store the installation directory
+    StrCpy $INSTDIR "$0"
+
+    ;Check if the existing installation is compatible
+    ReadRegStr $0 HKCU "${SUBKEY}" "${MAJORVERFLAG}"
+
+    ${If} "$0" == ""
+    ${OrIf} "$0" != "${MAJORVER}"
+      MessageBox MB_OK "Incompatible version installed. Please uninstall the existing version and run this installer again."
+      Quit
+    ${EndIf}
   ${EndIf}
 FunctionEnd
 
@@ -128,6 +145,11 @@ Section "Install"
     WriteRegDWORD HKCU "${SUBKEY}" "${JUMPINGFLAG}" ${MF_UNCHECKED}
     WriteRegDWORD HKCU "${SUBKEY}" "${DRAGGINGFLAG}" ${MF_UNCHECKED}
   ${EndIf}
+
+  ;Store the version number in the registry
+  WriteRegDWORD HKCU "${SUBKEY}" "${MAJORVERFLAG}" ${MAJORVER}
+  WriteRegDWORD HKCU "${SUBKEY}" "${MINORVERFLAG}" ${MINORVER}
+  WriteRegDWORD HKCU "${SUBKEY}" "${PATCHVERFLAG}" ${PATCHVER}
 
   ;Show entry in Add/Remove Programs
   WriteRegStr HKCU "${ADDREMOVELISTKEY}" \

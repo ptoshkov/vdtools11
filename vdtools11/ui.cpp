@@ -329,7 +329,7 @@ void ShowMenu(void)
 
     if (ID_MENU_ABOUT == ret)
     {
-        MessageBox(NULL, TEXT("" APPNAME " v0.3.0."), TEXT("About"), MB_OK);
+        MessageBox(NULL, TEXT("" APPNAME " v" MAJORVER "." MINORVER "." PATCHVER "."), TEXT("About"), MB_OK);
     }
 
     if (ID_MENU_HELP == ret)
