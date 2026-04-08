@@ -12,7 +12,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
     // Prevent multiple instances from running.
     if (FindWindow(CLASSNAME, WINDOWNAME))
     {
-        logError(TEXT("VD Tools 11 is already running."));
+        MessageBox(NULL, TEXT("" APPNAME " is already running."), NULL, MB_ICONWARNING);
         return 1;
     }
 
@@ -35,14 +35,17 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR /* pCmdLine */, int /*
     uiStartOnHomeChecked = prefStartOnHomeChecked;
     uiJumpingChecked = prefJumpingChecked;
     uiDraggingChecked = prefDraggingChecked;
+    uiNumberChecked = prefNumberChecked;
     uiToggleStartOnHome = prefToggleStartOnHome;
     uiToggleJumping = prefToggleJumping;
     uiToggleDragging = prefToggleDragging;
+    uiToggleNumber = prefToggleNumber;
     uiSetInstance(hInstance);
     uiCreateWindow();
     uiAddTrayIcon();
     if (prefJumpingChecked()) uiRegisterJumpKeys();
     if (prefDraggingChecked()) uiRegisterDragKeys();
+    if (prefNumberChecked()) uiHookWinEvents();
 
     uiStartMessageLoop();
 

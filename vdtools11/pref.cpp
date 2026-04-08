@@ -38,6 +38,11 @@ DWORD prefDraggingChecked(void)
     return RegGetValueConvenience(DRAGGINGFLAG, TEXT("Failed to get registry value " DRAGGINGFLAG "."));
 }
 
+DWORD prefNumberChecked(void)
+{
+    return RegGetValueConvenience(NUMBERFLAG, TEXT("Failed to get registry value " NUMBERFLAG "."));
+}
+
 DWORD Inverse(DWORD value)
 {
     if (value)
@@ -87,4 +92,10 @@ void prefToggleDragging(void)
 {
     DWORD value = Inverse(prefDraggingChecked());
     RegSetValueExConvenience(DRAGGINGFLAG, value, TEXT("Failed to set registry value " DRAGGINGFLAG "."));
+}
+
+void prefToggleNumber(void)
+{
+    DWORD value = Inverse(prefNumberChecked());
+    RegSetValueExConvenience(NUMBERFLAG, value, TEXT("Failed to set registry value " NUMBERFLAG "."));
 }

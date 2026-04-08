@@ -23,6 +23,7 @@
   !define STARTONHOMEFLAG "${_STARTONHOMEFLAG}"
   !define JUMPINGFLAG "${_JUMPINGFLAG}"
   !define DRAGGINGFLAG "${_DRAGGINGFLAG}"
+  !define NUMBERFLAG "${_NUMBERFLAG}"
   !define LNKNAME "${APPNAME}.lnk"
   !define ICONAME "${CLASSNAME}.ico"
   !define ICOPATH "${RESOURCESDIR}\${ICONAME}"
@@ -144,6 +145,7 @@ Section "Install"
     WriteRegDWORD HKCU "${SUBKEY}" "${STARTONHOMEFLAG}" ${MF_UNCHECKED}
     WriteRegDWORD HKCU "${SUBKEY}" "${JUMPINGFLAG}" ${MF_UNCHECKED}
     WriteRegDWORD HKCU "${SUBKEY}" "${DRAGGINGFLAG}" ${MF_UNCHECKED}
+    WriteRegDWORD HKCU "${SUBKEY}" "${NUMBERFLAG}" ${MF_UNCHECKED}
   ${EndIf}
 
   ;Store the version number in the registry

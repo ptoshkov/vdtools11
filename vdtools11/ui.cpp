@@ -10,42 +10,143 @@
 #define ID_MENU_ITEM1       (1003)
 #define ID_MENU_ITEM2       (1004)
 #define ID_MENU_ITEM3       (1005)
-#define ID_MENU_ABOUT       (1006)
-#define ID_MENU_HELP        (1007)
-#define ID_MENU_EXIT        (1008)
-#define ID_HOTKEY1          (1009)
-#define ID_HOTKEY2          (1010)
-#define ID_HOTKEY3          (1011)
-#define ID_HOTKEY4          (1012)
-#define ID_HOTKEY5          (1013)
-#define ID_HOTKEY6          (1014)
-#define ID_HOTKEY7          (1015)
-#define ID_HOTKEY8          (1016)
-#define ID_HOTKEY9          (1017)
-#define ID_HOTKEY10         (1018)
-#define ID_HOTKEY11         (1019)
-#define ID_HOTKEY12         (1020)
-#define ID_HOTKEY13         (1021)
-#define ID_HOTKEY14         (1022)
-#define ID_HOTKEY15         (1023)
-#define ID_HOTKEY16         (1024)
-#define ID_HOTKEY17         (1025)
-#define ID_HOTKEY18         (1026)
-#define ID_HOTKEY19         (1027)
-#define ID_HOTKEY20         (1028)
+#define ID_MENU_ITEM4       (1006)
+#define ID_MENU_ABOUT       (1007)
+#define ID_MENU_HELP        (1008)
+#define ID_MENU_EXIT        (1009)
+#define ID_HOTKEY1          (1010)
+#define ID_HOTKEY2          (1011)
+#define ID_HOTKEY3          (1012)
+#define ID_HOTKEY4          (1013)
+#define ID_HOTKEY5          (1014)
+#define ID_HOTKEY6          (1015)
+#define ID_HOTKEY7          (1016)
+#define ID_HOTKEY8          (1017)
+#define ID_HOTKEY9          (1018)
+#define ID_HOTKEY10         (1019)
+#define ID_HOTKEY11         (1020)
+#define ID_HOTKEY12         (1021)
+#define ID_HOTKEY13         (1022)
+#define ID_HOTKEY14         (1023)
+#define ID_HOTKEY15         (1024)
+#define ID_HOTKEY16         (1025)
+#define ID_HOTKEY17         (1026)
+#define ID_HOTKEY18         (1027)
+#define ID_HOTKEY19         (1028)
+#define ID_HOTKEY20         (1029)
 
 void (*uiJumpToDesktop)(UINT, BOOL);
 UINT (*uiGetCurrentDesktop)(void);
 DWORD (*uiStartOnHomeChecked)(void);
 DWORD (*uiJumpingChecked)(void);
 DWORD (*uiDraggingChecked)(void);
+DWORD (*uiNumberChecked)(void);
 void (*uiToggleStartOnHome)(void);
 void (*uiToggleJumping)(void);
 void (*uiToggleDragging)(void);
+void (*uiToggleNumber)(void);
 static HINSTANCE m_hInstance;
 static HWND m_hWnd;
 static NOTIFYICONDATA m_nid;
 static UINT m_uTaskbarCreatedMsg;
+static HWINEVENTHOOK m_hNamechangeEvent;
+static HWINEVENTHOOK m_hHideEvent;
+static HICON m_hIcon;
+static UINT m_numberDisplayed;
+
+void ShowDesktopNumber(void)
+{
+    UINT numberToDisplay = uiGetCurrentDesktop() + 1;
+
+    if (m_numberDisplayed == numberToDisplay)
+    {
+        return;
+    }
+
+    m_numberDisplayed = numberToDisplay;
+    int cx = 16;
+    int cy = cx;
+
+    // Create device context.
+    HDC hdc = GetDC(NULL);
+    HDC hdcMem = CreateCompatibleDC(hdc);
+
+    // Create bitmap.
+    HBITMAP hbm = CreateCompatibleBitmap(hdc, cx, cy);
+    HBITMAP hbmOld = (HBITMAP)SelectObject(hdcMem, hbm);
+    HBITMAP hbmMask = CreateCompatibleBitmap(hdc, cx, cy);
+    ReleaseDC(NULL, hdc);
+
+    // Create font.
+    HFONT hFont = CreateFont(
+        0,          // cHeight
+        0,          // cWidth
+        0,          // cEscapement
+        0,          // cOrientation
+        FW_BOLD,    // cWeight
+        0,          // bItalic
+        0,          // bUnderline
+        0,          // bStrikeOut
+        0,          // iCharSet
+        0,          // iOutPrecision
+        0,          // iClipPrecision
+        0,          // iQuality
+        0,          // iPitchAndFamily
+        0);         // pszFaceName
+    HFONT hFontOld = (HFONT)SelectObject(hdcMem, hFont);
+
+    // Draw text in the bitmap.
+    WCHAR buf[32];
+    wsprintf(buf, TEXT("  %d  "), numberToDisplay);
+    RECT rc = {0, 0, cx, cy};
+    DrawText(hdcMem, buf, -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+
+    // Create icon.
+    ICONINFO ii;
+    ii.fIcon = TRUE;
+    ii.hbmMask = hbmMask;
+    ii.hbmColor = hbm;
+    HICON hIcon = CreateIconIndirect(&ii);
+
+    // Update tray icon.
+    m_nid.hIcon = hIcon;
+    Shell_NotifyIcon(NIM_MODIFY, &m_nid);
+
+    // Release icon
+    (void)DestroyIcon(hIcon);
+
+    // Release font.
+    SelectObject(hdcMem, hFontOld);
+    DeleteObject(hFont);
+
+    // Release bitmap.
+    DeleteObject(hbmMask);
+    SelectObject(hdcMem, hbmOld);
+    DeleteObject(hbm);
+
+    // Release device context.
+    DeleteDC(hdcMem);
+}
+
+VOID CALLBACK Wineventproc(
+    HWINEVENTHOOK hWinEventHook,
+    DWORD         event,
+    HWND          hwnd,
+    LONG          idObject,
+    LONG          idChild,
+    DWORD         idEventThread,
+    DWORD         dwmsEventTime
+)
+{
+    (void)hWinEventHook;
+    (void)event;
+    (void)hwnd;
+    (void)idObject;
+    (void)idChild;
+    (void)idEventThread;
+    (void)dwmsEventTime;
+    ShowDesktopNumber();
+}
 
 void uiRegisterJumpKeys(void)
 {
@@ -169,6 +270,31 @@ void uiRegisterDragKeys(void)
     }
 }
 
+void uiHookWinEvents(void)
+{
+    ShowDesktopNumber();
+
+    m_hNamechangeEvent = SetWinEventHook(
+        EVENT_OBJECT_NAMECHANGE,                           // eventMin
+        EVENT_OBJECT_NAMECHANGE,                           // eventMax
+        NULL,                                              // hmodWinEventProc
+        Wineventproc,                                      // pfnWinEventProc
+        0,                                                 // idProcess (0 = all processes)
+        0,                                                 // idThread (0 = all threads)
+        WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS    // dwFlags
+    );
+
+    m_hHideEvent = SetWinEventHook(
+        EVENT_OBJECT_HIDE,                                 // eventMin
+        EVENT_OBJECT_HIDE,                                 // eventMax
+        NULL,                                              // hmodWinEventProc
+        Wineventproc,                                      // pfnWinEventProc
+        0,                                                 // idProcess (0 = all processes)
+        0,                                                 // idThread (0 = all threads)
+        WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS    // dwFlags
+    );
+}
+
 void UnregisterJumpKeys(void)
 {
     if (!m_hWnd)
@@ -285,6 +411,25 @@ void UnregisterDragKeys(void)
     }
 }
 
+void UnhookWinEvents(void)
+{
+    if (m_hNamechangeEvent)
+    {
+        (void)UnhookWinEvent(m_hNamechangeEvent);
+    }
+
+    if (m_hHideEvent)
+    {
+        (void)UnhookWinEvent(m_hHideEvent);
+    }
+
+    m_numberDisplayed = 0;
+
+    // Restore default icon.
+    m_nid.hIcon = m_hIcon;
+    Shell_NotifyIcon(NIM_MODIFY, &m_nid);
+}
+
 void ShowMenu(void)
 {
     HMENU hMenu = CreatePopupMenu();
@@ -297,6 +442,7 @@ void ShowMenu(void)
     AppendMenu(hMenu, MF_STRING | uiStartOnHomeChecked(), ID_MENU_ITEM1, TEXT("Switch To Desktop 1 On Start"));
     AppendMenu(hMenu, MF_STRING | uiJumpingChecked(), ID_MENU_ITEM2, TEXT("Jump To Desktop Using Shortcut"));
     AppendMenu(hMenu, MF_STRING | uiDraggingChecked(), ID_MENU_ITEM3, TEXT("Move Windows To Adjacent Desktop"));
+    AppendMenu(hMenu, MF_STRING | uiNumberChecked(), ID_MENU_ITEM4, TEXT("Show Desktop Number In Tray"));
 
     AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
     AppendMenu(hMenu, MF_STRING, ID_MENU_ABOUT, TEXT("About"));
@@ -327,9 +473,15 @@ void ShowMenu(void)
         (uiDraggingChecked()) ? uiRegisterDragKeys() : UnregisterDragKeys();
     }
 
+    if (ID_MENU_ITEM4 == ret)
+    {
+        uiToggleNumber();
+        (uiNumberChecked()) ? uiHookWinEvents() : UnhookWinEvents();
+    }
+
     if (ID_MENU_ABOUT == ret)
     {
-        MessageBox(NULL, TEXT("" APPNAME " v" MAJORVER "." MINORVER "." PATCHVER "."), TEXT("About"), MB_OK);
+        MessageBox(NULL, TEXT("" APPNAME " v" MAJORVER "." MINORVER "." PATCHVER "."), TEXT("About"), MB_ICONINFORMATION);
     }
 
     if (ID_MENU_HELP == ret)
@@ -394,6 +546,10 @@ void uiCreateWindow(void)
 
     m_hWnd = 0;
     m_uTaskbarCreatedMsg = 0;
+    m_hNamechangeEvent = 0;
+    m_hHideEvent = 0;
+    m_hIcon = 0;
+    m_numberDisplayed = 0;
 
     // Register the window class.
     WNDCLASS wc = {0};
@@ -417,13 +573,16 @@ void uiAddTrayIcon(void)
         return;
     }
 
+    // Load icon image from resources.
+    m_hIcon = LoadIcon(m_hInstance, MAKEINTRESOURCE(1));
+
     // Add tray icon.
     m_nid.cbSize = sizeof(NOTIFYICONDATA);
     m_nid.hWnd = m_hWnd;
     m_nid.uID = ID_TRAY_APP_ICON;
     m_nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP;
     m_nid.uCallbackMessage = WM_USER_TRAYICON;
-    m_nid.hIcon = LoadIcon(m_hInstance, MAKEINTRESOURCE(1));
+    m_nid.hIcon = m_hIcon;
     lstrcpy(m_nid.szTip, APPNAME);
     Shell_NotifyIcon(NIM_ADD, &m_nid);
 
