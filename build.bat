@@ -8,8 +8,8 @@
 @set LOGNAME=%CLASSNAME%.log
 @set INSTNAME=Install.exe
 @set UINSTNAME=Uninstall.exe
-@set MAJORVER=0
-@set MINORVER=3
+@set MAJORVER=1
+@set MINORVER=0
 @set PATCHVER=0
 @set STARTONHOMEFLAG=StartOnHomeFlag
 @set JUMPINGFLAG=JumpingFlag
