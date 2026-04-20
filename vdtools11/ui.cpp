@@ -150,6 +150,12 @@ VOID CALLBACK Wineventproc(
     ShowDesktopNumber();
 }
 
+void RedrawDesktopNumber(void)
+{
+    m_numberDisplayed = 0;
+    ShowDesktopNumber();
+}
+
 void uiRegisterJumpKeys(void)
 {
     if (!m_hWnd)
@@ -511,6 +517,9 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             ShowMenu();
             break;
         }
+        break;
+    case WM_SYSCOLORCHANGE:
+        if (uiNumberChecked()) RedrawDesktopNumber();
         break;
     case WM_CLOSE:
         DestroyWindow(hWnd);
