@@ -76,8 +76,8 @@ void ShowDesktopNumber(void)
     HBITMAP hbmOld = (HBITMAP)SelectObject(hdcMem, hbm);
     HBITMAP hbmMask = CreateCompatibleBitmap(hdc, cx, cy);
     ReleaseDC(NULL, hdc);
-    SetBkColor(hdcMem, RGB(0, 0, 0));
-    SetTextColor(hdcMem, RGB(255, 255, 255));
+    SetBkColor(hdcMem, GetSysColor(COLOR_3DFACE));
+    SetTextColor(hdcMem, GetSysColor(COLOR_BTNTEXT));
 
     // Create font.
     HFONT hFont = CreateFont(
