@@ -64,8 +64,8 @@ void ShowDesktopNumber(void)
     }
 
     m_numberDisplayed = numberToDisplay;
-    int cx = 16;
-    int cy = cx;
+    int cx = GetSystemMetrics(SM_CXSMICON);
+    int cy = GetSystemMetrics(SM_CYSMICON);
 
     // Create device context.
     HDC hdc = GetDC(NULL);
@@ -76,8 +76,6 @@ void ShowDesktopNumber(void)
     HBITMAP hbmOld = (HBITMAP)SelectObject(hdcMem, hbm);
     HBITMAP hbmMask = CreateCompatibleBitmap(hdc, cx, cy);
     ReleaseDC(NULL, hdc);
-    SetBkColor(hdcMem, GetSysColor(COLOR_3DFACE));
-    SetTextColor(hdcMem, GetSysColor(COLOR_BTNTEXT));
 
     // Create font.
     HFONT hFont = CreateFont(
@@ -99,7 +97,7 @@ void ShowDesktopNumber(void)
 
     // Draw text in the bitmap.
     WCHAR buf[32];
-    wsprintf(buf, TEXT("    %d    "), numberToDisplay);
+    wsprintf(buf, TEXT("%d"), numberToDisplay);
     RECT rc = {0, 0, cx, cy};
     DrawText(hdcMem, buf, -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
