@@ -70,12 +70,17 @@ void ShowDesktopNumber(void)
     // Create device context.
     HDC hdc = GetDC(NULL);
     HDC hdcMem = CreateCompatibleDC(hdc);
+    HDC hdcMem2 = CreateCompatibleDC(hdc);
 
     // Create bitmap.
     HBITMAP hbm = CreateCompatibleBitmap(hdc, cx, cy);
     HBITMAP hbmOld = (HBITMAP)SelectObject(hdcMem, hbm);
-    HBITMAP hbmMask = CreateCompatibleBitmap(hdc, cx, cy);
+    HBITMAP hbmMask = CreateBitmap(cx, cy, 1, 1, NULL);
+    HBITMAP hbmOld2 = (HBITMAP)SelectObject(hdcMem2, hbmMask);
     ReleaseDC(NULL, hdc);
+    RECT rc = {0, 0, cx, cy};
+    FillRect(hdcMem, &rc, (HBRUSH)GetStockObject(BLACK_BRUSH));
+    FillRect(hdcMem2, &rc, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
     // Create font.
     HFONT hFont = CreateFont(
@@ -94,12 +99,15 @@ void ShowDesktopNumber(void)
         0,          // iPitchAndFamily
         0);         // pszFaceName
     HFONT hFontOld = (HFONT)SelectObject(hdcMem, hFont);
+    HFONT hFontOld2 = (HFONT)SelectObject(hdcMem2, hFont);
 
     // Draw text in the bitmap.
     WCHAR buf[32];
     wsprintf(buf, TEXT("%d"), numberToDisplay);
-    RECT rc = {0, 0, cx, cy};
     DrawText(hdcMem, buf, -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+    DrawText(hdcMem2, buf, -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+    SelectObject(hdcMem, hbmOld);
+    SelectObject(hdcMem2, hbmOld2);
 
     // Create icon.
     ICONINFO ii;
@@ -117,15 +125,18 @@ void ShowDesktopNumber(void)
 
     // Release font.
     SelectObject(hdcMem, hFontOld);
+    SelectObject(hdcMem2, hFontOld2);
     DeleteObject(hFont);
 
     // Release bitmap.
+    SelectObject(hdcMem2, hbmOld2);
     DeleteObject(hbmMask);
     SelectObject(hdcMem, hbmOld);
     DeleteObject(hbm);
 
     // Release device context.
     DeleteDC(hdcMem);
+    DeleteDC(hdcMem2);
 }
 
 VOID CALLBACK Wineventproc(
