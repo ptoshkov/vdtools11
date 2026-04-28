@@ -80,6 +80,7 @@ FunctionEnd
 
 Function CreateAutoStartupShortcut
   CreateShortCut "$SMSTARTUP\${LNKNAME}" "$INSTDIR\${EXENAME}"
+  StrCpy $1 "TRUE"
 FunctionEnd
 
 ;--------------------------------
@@ -91,6 +92,12 @@ Function SkipDirectorySelection
 
   ${If} "$0" != ""
     Abort
+  ${EndIf}
+FunctionEnd
+
+Function RemoveAutoStartupShortcut
+  ${If} "$1" != "TRUE"
+    Delete "$SMSTARTUP\${LNKNAME}"
   ${EndIf}
 FunctionEnd
 
@@ -112,6 +119,7 @@ FunctionEnd
   !define MUI_PAGE_CUSTOMFUNCTION_PRE "SkipDirectorySelection"
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
+  !define MUI_PAGE_CUSTOMFUNCTION_LEAVE "RemoveAutoStartupShortcut"
   !insertmacro MUI_PAGE_FINISH
 
   !insertmacro MUI_UNPAGE_WELCOME

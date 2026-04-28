@@ -84,7 +84,7 @@ void ShowDesktopNumber(void)
 
     // Create font.
     HFONT hFont = CreateFont(
-        0,          // cHeight
+        18,          // cHeight
         0,          // cWidth
         0,          // cEscapement
         0,          // cOrientation
