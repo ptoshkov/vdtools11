@@ -53,14 +53,12 @@ public:
 static IVirtualDesktopManager *m_pVirtualDesktopManager;
 static IServiceProvider *m_pServiceProvider;
 static IVirtualDesktopManagerInternal *m_pVirtualDesktopManagerInternal;
-static DWORD m_lastJumpTimeMs;
 
 void coCreateInstances(void)
 {
     m_pVirtualDesktopManager = NULL;
     m_pServiceProvider = NULL;
     m_pVirtualDesktopManagerInternal = NULL;
-    m_lastJumpTimeMs = 0;
 
     HRESULT hr = CoCreateInstance(CLSID_VirtualDesktopManager, NULL, CLSCTX_ALL,
         IID_PPV_ARGS(&m_pVirtualDesktopManager));
@@ -108,68 +106,12 @@ void coReleaseInstances(void)
     }
 }
 
-BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
-{
-    if (!IsWindowVisible(hWnd))
-    {
-        return TRUE;
-    }
-
-    INT cloaked;
-    DwmGetWindowAttribute(hWnd, DWMWA_CLOAKED, &cloaked, sizeof(INT));
-
-    if (cloaked)
-    {
-        return TRUE;
-    }
-
-    WCHAR buf[3];
-    int len = GetWindowText(hWnd, buf, 2);
-
-    if (0 == len)
-    {
-        return TRUE;
-    }
-
-    IVirtualDesktopManager *pVirtualDesktopManager = reinterpret_cast<IVirtualDesktopManager*>(lParam);
-    BOOL ret;
-    pVirtualDesktopManager->IsWindowOnCurrentVirtualDesktop(hWnd, &ret);
-
-    if (!ret)
-    {
-        return TRUE;
-    }
-
-    (void)SetForegroundWindow(hWnd);
-
-    // Stop flashing the window.
-    FLASHWINFO fwi = {0};
-    fwi.cbSize = sizeof(fwi);
-    fwi.hwnd = hWnd;
-    fwi.dwFlags = FLASHW_STOP;
-    fwi.uCount = 0;
-    fwi.dwTimeout = 0;
-    (void)FlashWindowEx(&fwi);
-
-    return FALSE;
-}
-
 void coJumpToDesktop(UINT idx, BOOL bMoveForegroundView)
 {
     if ((NULL == m_pVirtualDesktopManager) || (NULL == m_pVirtualDesktopManagerInternal))
     {
         return;
     }
-
-    const DWORD animationTimeoutMs = 200;
-    DWORD currentTimeMs = GetTickCount();
-
-    if ((currentTimeMs - m_lastJumpTimeMs) <= animationTimeoutMs)
-    {
-        return;
-    }
-
-    m_lastJumpTimeMs = currentTimeMs;
 
     IObjectArray *pDesktops;
     (void)m_pVirtualDesktopManagerInternal->GetDesktops(&pDesktops);
@@ -185,16 +127,25 @@ void coJumpToDesktop(UINT idx, BOOL bMoveForegroundView)
     IVirtualDesktop *pVirtualDesktop;
     pDesktops->GetAt(idx, IID_PPV_ARGS(&pVirtualDesktop));
 
+    IVirtualDesktop *pCurrentDesktop;
+    (void)m_pVirtualDesktopManagerInternal->GetCurrentDesktop(&pCurrentDesktop);
+
+    if (pCurrentDesktop == pVirtualDesktop)
+    {
+        return;
+    }
+
     if (bMoveForegroundView)
     {
         (void)m_pVirtualDesktopManagerInternal->SwitchDesktopAndMoveForegroundView(pVirtualDesktop);
     }
     else
     {
+        // Set the progman.exe window as the foreground window, otherwise Windows
+        // will not be able to focus a window in the new virtual desktop after switching.
+        HWND hWnd = FindWindow(TEXT("Progman"), NULL);
+        SetForegroundWindow(hWnd);
         (void)m_pVirtualDesktopManagerInternal->SwitchDesktop(pVirtualDesktop);
-
-        // Set the focus to a window in the new virtual desktop.
-        EnumWindows(EnumWindowsProc, reinterpret_cast<LPARAM>(m_pVirtualDesktopManager));
     }
 }
 
